@@ -43,8 +43,6 @@ const Features = () => {
             </div>
 
             <div className='md:w-[45%]'>
-                  {/* <img src={assets.EmsFeatureImg3} alt="" className='w-full' /> */}
-                  {/* <img src="https://static.vecteezy.com/system/resources/thumbnails/023/258/496/small/digital-data-protection-design-illustration-cyber-security-illustration-background-cloud-computing-network-safety-concept-free-png.png" alt="" className='w-full' /> */}
                   <img src="https://pnghq.com/wp-content/uploads/2024/11/pnghq.com-cyber-security-profession-3.png" alt="" />
             </div>
            </div>

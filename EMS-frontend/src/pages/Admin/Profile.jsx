@@ -21,7 +21,7 @@ const Profile = () => {
                     if (!adminProfile) return <p>Loading...</p>;
                   
 
-        const updateAdminProfileData = async(req,res)=>{
+        const updateAdminProfileData = async()=>{
           try {
             const formData = new FormData()
 

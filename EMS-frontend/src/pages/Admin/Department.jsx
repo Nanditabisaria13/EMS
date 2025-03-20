@@ -95,10 +95,7 @@ const Department = () => {
          <h1 className='font-medium text-2xl text-neutral-800 dark:text-white'>Departments</h1>
          <DepartmentChart/>
          </div>
-          <div>
-            {/* chart sec */}
-          </div>
-
+         
          </div>
 
       </div>

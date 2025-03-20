@@ -28,7 +28,7 @@ const Signup = () => {
       const {data} = await axios.post(backendUrl +'/api/admin/register' ,{firstName,lastName,email,password,dob,gender,phone,address})
     
            if(data.success){
-             toast.success('Invalid Credentials!')
+             toast.success('Successfully Registered Your Account')
               localStorage.setItem('aToken', data.token)
               setAToken(data.token)
             
