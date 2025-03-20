@@ -1,0 +1,708 @@
+const adminModel = require('../models/adminModel')
+const jwt = require('jsonwebtoken')
+const {validationResult} = require('express-validator')
+const bcrypt = require('bcrypt')
+const employeeModel = require('../models/EmployeeModel')
+const cloudinary = require('cloudinary').v2
+const taskModel = require('../models/taskModel')
+const departmentModel = require('../models/DepartmentModel')
+const mongoose = require('mongoose')
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+
+// api for register admin:
+module.exports.registerAdmin = async(req,res)=>{
+  try {
+      
+      const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors:errors.array()})
+   }
+
+      const {firstName,lastName,email,password,dob,gender,phone,address} = req.body
+      console.log(req.body)
+
+      if(!firstName || !email || !password){
+         return res.status(400).json({success:false, message:"Missing Fields"})
+      }
+        
+  
+      const isAdminAlreadyExists = await adminModel.findOne({email})
+      if(isAdminAlreadyExists){
+          return res.status(400).json({success:false, message:"User already exists"})
+      }
+      
+      // hashed password:
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password,salt)
+
+      const AdminData = {
+        fullName: {
+          firstName,
+          lastName,
+        },
+        email,
+        password: hashedPassword,
+        dob,
+        gender,
+        phone,
+        address
+      }
+
+      const newAdmin = new adminModel(AdminData)
+      const admin = await newAdmin.save()
+
+      // generate token
+
+      const token = jwt.sign({id:admin._id},process.env.JWT_SECRET)
+       return res.status(200).json({success:true, message:'Successfully created your account',token})
+
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({success:false, message:error.message})
+  }
+}
+
+// api for login admin:
+module.exports.loginAdmin = async(req,res)=>{
+  try {
+    const errors = validationResult(req)
+ if(!errors.isEmpty()){
+    return res.status(400).json({errors:errors.array()})
+ }
+
+ const {email,password} = req.body
+
+ const admin = await adminModel.findOne({email})
+
+ if(!admin){
+     return res.status(400).json({success:false, message:"Invalid Email or Password"})
+ }
+
+ const isMatch = bcrypt.compare(password,admin.password)
+
+  if(isMatch){
+    const token = jwt.sign({id:admin._id},process.env.JWT_SECRET)
+    res.cookie('token',token)
+    return res.status(200).json({success:true,token})
+  }else{
+    return res.status(400).json({success:false,message:'Invalid Credentials'})
+  }
+ } catch (error) {
+    console.log(error)
+    res.status(500).json({success:false,message:error.message})
+ }
+}
+
+// api for logout admin:
+module.exports.logoutAdmin = async(req,res)=>{
+    res.clearCookie('token')
+    return res.status(200).json({success:true,message:'Logged Out!'})
+}
+
+// api for get the profile:
+module.exports.getProfile = async(req,res)=>{
+  try {
+    const adminId = req.adminId
+    const admin = await adminModel.findById(adminId).select('-password') 
+    return res.status(200).json({success:true, admin})
+ } catch (error) {
+     console.log(error)
+     res.status(500).json({success:false,message:error.message})
+ }
+}
+
+// api for update the profile:
+module.exports.updateProfile = async(req,res)=>{
+  try {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors:errors.array()})
+    }
+
+    const adminId = req.adminId
+    const{firstName, lastName, phone, address, dob , gender,email } = req.body
+    const imageFile = req.file
+  
+    const admin = await adminModel.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({success:false, message: 'Something went wrong!' });
+    }
+
+      // Update employee details
+    const updatedAdminData = {
+      'fullName.firstName': firstName,
+      'fullName.lastName': lastName,
+      email: email,
+      dob: dob,
+      gender: gender,
+      address: address,
+      phone: phone,
+    }; 
+
+    const updatedAdmin = await adminModel.findByIdAndUpdate(
+      adminId,          
+      { $set: updatedAdminData }, 
+      { new: true }    
+    );
+
+    if (!updatedAdmin) {
+      return res.status(404).json({success:false, message: 'Something Went Wrong!' });
+    }
+
+
+      if(imageFile){
+        const imageUpload = await cloudinary.uploader.upload(imageFile.path,{resource_type:'image'})
+        const imageUrl = imageUpload.secure_url
+        await adminModel.findByIdAndUpdate(adminId,{image:imageUrl})
+      }
+      return res.status(200).json({success:true, message:"Profie Updated Successfully",updatedAdmin})
+     
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({success:false,message:error.message})
+  }
+
+}
+
+// api for get all emoloyee:
+module.exports.getAllEmployee = async(req,res)=>{
+       try {
+        const adminId = req.adminId
+        if (!adminId) {
+          return res.status(400).json({ success: false, message: "Something Went Wrong!" });
+        }
+
+        const employees = await employeeModel.find({ adminId }).select('-password');
+        if (employees.length === 0) {
+          return res.status(200).json({ success: true, message: 'No employees found!'});
+        }
+     
+        return res.status(200).json({success:true, employees})
+       } catch (error) {
+          console.log(error)
+          return res.status(500).json({success:false, message:error.message})
+       }
+}
+
+// api for get specific employee:
+module.exports.getSpecificEmployee = async(req,res)=>{
+    try {
+        const {employeeId} = req.params
+        const employee = await employeeModel.findById(employeeId).select('-password')
+      
+        if(!employee){
+            return res.status(400).json({success:false, message:"Employee not found"})
+        }
+      
+        return res.status(200).json({success:true, employee})
+       
+    } catch (error) {
+          console.log(error)
+          return res.status(500).json({success:false, message:error.message})
+    }
+}
+
+// api for add a new employee:
+module.exports.createEmployee = async(req,res)=>{
+    try {
+      const adminId = req.adminId; 
+        const{fullName,email,password,dob,position,gender,phone,salary,department,joiningDate,address,workingType} = req.body
+       const imageFile = req.file
+
+       
+  
+  if(!fullName || !email ||!password || !dob || !position || !gender || !phone || !department || !salary || !joiningDate || !address ||!workingType||!adminId ){
+            return res.status(400).json({success:false, message:"Missing Details!"})
+        }
+
+        // hashing password:
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password,salt)
+
+        // upload image to cloudinary:
+
+        const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"})
+        const imageUrl = imageUpload.secure_url
+      
+
+        const employeeData = {
+            fullName,
+            email,
+            password:hashedPassword,
+            dob,
+            position,
+            gender,
+            phone,
+            salary,
+            department,
+            address,
+            joiningDate,
+            workingType,
+            adminId,
+            image:imageUrl
+        }
+       
+        
+        const newEmployee = new employeeModel(employeeData)
+         await newEmployee.save()
+
+         await adminModel.findByIdAndUpdate(adminId, {
+          $push: { employees: newEmployee._id },
+        });
+      
+         return res.status(200).json({success:true, message:'Employee Added'})
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({success:false, message:error.message})
+    }
+}
+
+// api to update user profile:
+module.exports.updateEmployeeProfile = async (req,res)=>{
+  try {
+    const { employeeId } = req.params;
+    const { firstName, lastName, phone, address, dob , gender,email,position,department,salary} = req.body
+    const imageFile = req.file 
+    
+    const employee = await employeeModel.findById(employeeId);
+
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    // Update employee details
+    const updatedEmployeeData = {
+      'fullName.firstName': firstName,
+      'fullName.lastName': lastName,
+      email: email,
+      dob: dob,
+      gender: gender,
+      address: address,
+      phone: phone,
+      position: position,
+      department: department,
+      salary: salary,
+    }; 
+
+    const updatedEmployee = await employeeModel.findByIdAndUpdate(
+      employeeId,          
+      { $set: updatedEmployeeData }, 
+      { new: true }    
+    );
+
+    if (!updatedEmployee) {
+      return res.status(404).json({success:false, message: 'Employee not found' });
+    }
+
+    if(imageFile){
+
+      // upload image to cloudinary:
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:'image'})
+      const imageUrl = imageUpload.secure_url
+
+      await employeeModel.findByIdAndUpdate(employeeId, {image:imageUrl})
+    }
+    res.status(200).json({success:true,message: 'Employee profile updated successfully', updatedEmployee });
+  
+  } catch (error) {
+    console.log(error)
+    res.json({success:false,message:error.message})
+  }
+}
+
+// api for add a newTask to the employee:
+module.exports.addNewTask = async(req,res)=>{
+    try {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+          return res.status(400).json({errors:errors.array()})
+        }
+
+        const {employeeEmail, title, description, date, category,deadline} = req.body;
+
+
+         const employee = await employeeModel.findOne({email:employeeEmail})
+
+         if(!employee){
+            return res.status(400).json({success:false, message:"Employee Not Found!"})
+         }
+
+         const newTask = {
+            taskId:employee.tasks.length,
+            title,
+            description,
+            date,
+            category,
+            deadline,
+            active:false,
+            newTask:true,
+            completed:false,
+            failed:false
+         }
+         
+         employee.tasks.push(newTask)
+         employee.taskNumbers.newTask +=1
+         await employee.save()
+
+         return res.status(200).json({success:true, employee,message:"Successfully assign newTask to Employee"})
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({success:false, message:error.message})
+    }
+}
+
+// api for update the task:
+module.exports.updateTask = async(req,res)=>{
+    try {
+        // const {  } = req.params;
+        const { title, description, category, date, deadline,employeeId, taskId } = req.body;
+
+        // Step 1: Update the task directly using findOneAndUpdate
+        const updatedEmployee = await employeeModel.findOneAndUpdate(
+            { _id: employeeId, "tasks.taskId": parseInt(taskId) },  // Find employee and task by taskId
+            {
+                $set: {
+                    "tasks.$.title": title,
+                    "tasks.$.description": description,
+                    "tasks.$.category": category,
+                    "tasks.$.date": date,
+                    "tasks.$.deadline": deadline
+                }
+            },
+            { new: true }  // Return the updated document
+        );
+
+        if (!updatedEmployee) {
+            return res.status(400).json({ success: false, message: "Employee or Task not found!" });
+        }
+
+        // Return the updated employee with the modified task
+        return res.status(200).json({ success: true, message: "Task Updated Successfully", employee: updatedEmployee });
+    } catch (error) {
+        console.error('Error updating task:', error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+// api for delete the task:
+module.exports.deleteTask = async(req,res)=>{
+    try {
+       const {employeeId, taskId} = req.body 
+       const employee = await employeeModel.findById(employeeId)
+       if(!employee){
+        return res.status(400).json({success:false, message:"Employee not found"})
+       }
+      
+    //    find task by taskId
+       const taskIndex = employee.tasks.findIndex(task=>task.taskId === parseInt(taskId))
+       if(taskIndex=== -1){
+        return res.status(400).json({success:false,messge:"Task not found!"})
+       }
+
+    //    remove the task from the array:
+      employee.tasks.splice(taskIndex,1)
+      // employee.taskNumbers.newTask +=1
+      employee.taskNumbers.active -=1
+
+    //   resign the task Id for the remaining task:
+    employee.tasks.forEach((task,index)=>{
+        task.taskId = index;
+    })
+
+    const updatedEmployee = await employeeModel.findByIdAndUpdate(
+      employeeId,
+      {
+        tasks: employee.tasks,
+        'taskNumbers.active': employee.taskNumbers.active,  // Update the active task count
+      },
+      { new: true }  // Return the updated document
+    );
+
+
+      await  employee.save()
+     return res.status(200).json({success:true, message:"Task deleted successfully",updatedEmployee})
+    } catch (error) {
+        
+    }
+}
+
+// api for admin dashData:
+module.exports.adminDashboard = async(req,res)=>{
+    try {
+      const adminId = req.adminId
+      if (!adminId) {
+        return res.status(400).json({ success: false, message: "Something Went Wrong!" });
+      }
+
+      const employees = await employeeModel.find({ adminId }).select('-password');
+      
+        const summary = employees.map(employee =>({
+          employeeName:employee.fullName,
+          position:employee.position,
+          department:employee.department,
+          workingType:employee.workingType,
+          image:employee.image,
+          tasks:employee.tasks.length,
+          activeTask:employee.taskNumbers.active,
+          completedTask:employee.taskNumbers.completed,
+          failedTask:employee.taskNumbers.failed,
+          newTask:employee.taskNumbers.newTask
+        }))
+
+        const adminDashboard = {
+            AllEmployees: employees.length,
+            summary:summary,
+            employess:employees
+        }
+
+        return res.status(200).json({success:true, adminDashboard})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({success:false, message:error.message})
+    }
+}
+
+// api for search and filter the employee by taskStatus:
+module.exports.filterEmployee = async(req,res)=>{
+     try{
+        const { taskStatus } = req.query; 
+
+        if (!taskStatus || !['active', 'completed', 'failed'].includes(taskStatus)) {
+          return res.status(400).json({ message: 'Invalid task status. Must be one of: active, completed, failed' });
+        }
+    
+  
+        const employees = await employeeModel.find();
+        const filteredEmployees = [];
+    
+        for (const employee of employees) {
+          const matchingTasks = employee.tasks.filter(task => task[taskStatus] === true);
+    
+          if (matchingTasks.length > 0) {
+            filteredEmployees.push({
+                    _id: employee._id,
+                    fullName: employee.fullName,
+                    position: employee.position,
+                    image: employee.image,
+                    taskCount: matchingTasks.length, 
+                    tasks: matchingTasks 
+            });
+          }
+        }
+    
+        if (filteredEmployees.length === 0) { return res.status(200).json({message: `No employees found with ${taskStatus} tasks`,
+            data: [],
+          });
+        }
+
+       return res.status(200).json({ success:true, message: `Employees with ${taskStatus} tasks`,  filteredEmployees, });
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({success:false, message:error.message})
+    }
+} 
+
+// api to add new department:
+module.exports.addNewDepartment = async(req, res) => {
+  try {
+    const { departmentName } = req.body;
+    const adminId = req.adminId
+   
+     if (!departmentName) {
+        return res.status(400).json({ success: false, message: 'Department name is required' });
+      }
+  
+     
+      // Check if department already exists
+    const existingDepartment = await departmentModel.findOne({ departmentName, adminId });
+    if (existingDepartment) {
+      return res.status(400).json({ success: false, message: 'Department already exists' });
+    }
+
+    const newDepartment = new departmentModel({
+      departmentName,
+      adminId
+    });
+
+    await newDepartment.save();
+    await adminModel.findByIdAndUpdate(adminId, {
+      $push: { departments: newDepartment._id },
+    });
+    return res.status(200).json({ success: true, message: 'Department created successfully' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// api for get department with employee count:
+module.exports.getDepartmentsWithEmployeeCount = async(req, res) => {
+    try {
+      const adminId = req.adminId
+      if (!adminId) {
+        return res.status(400).json({ success: false, message: "Something Went Wrong!" });
+      }
+        const departments = await departmentModel.find({adminId});
+
+        const employeeCounts = await employeeModel.aggregate([
+          {
+            $match: { 
+                adminId:new mongoose.Types.ObjectId(adminId) // Ensure you match only the admin's employees
+            }
+        },
+            {
+                $group: {
+                    _id: "$department",  // Group by department name (which is a string in this case)
+                    employeeCount: { $sum: 1 },  // Count the number of employees in each department
+                }
+            }
+        ]);
+  
+
+        // Merge the employee count with department data
+        const departmentWithCounts = departments.map(department => {
+            const employeeCount = employeeCounts.find(count => count._id === department.departmentName);
+            return {
+                ...department.toObject(),
+                employeeCount: employeeCount ? employeeCount.employeeCount : 0,  // If no employees, set count to 0
+            };
+        });
+
+        return res.status(200).json({
+            success: true,
+            departments: departmentWithCounts,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// api for delete department:
+module.exports.deleteDepartment = async (req, res) => {
+    try {
+      const { departmentName } = req.body; 
+      const adminId = req.adminId
+      
+      // Check if the department exists
+      const department = await departmentModel.findOne({ departmentName, adminId });
+      if (!department) {
+        return res.status(404).json({ success: false, message: 'Department not found' });
+      }
+  
+      // Check if any employees are associated with this department
+      const employeesInDepartment = await employeeModel.find({ department: departmentName });
+  
+      // If there are employees in the department, you can either delete them or just unassign the department
+      if (employeesInDepartment.length > 0) {
+        // Optionally, you can choose to update the employees and unassign the department
+        await employeeModel.updateMany(
+          { department: departmentName },
+          { $set: { department: 'No Department' } } // Unassign employees from this department
+        );
+      }
+  
+      // Now delete the department
+      await departmentModel.findOneAndDelete({ departmentName });
+  
+      return res.status(200).json({ success: true, message:'Department deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({success: false, message: error.message});
+    }
+  };
+
+// api for serach employees by name:
+module.exports.searchEmployeesByName = async (req, res) => {
+    try {
+      const { name } = req.query; 
+      const employees = await employeeModel.find({
+        'fullName.firstName': { $regex: name, $options: 'i' },
+      });
+       
+      if(!employees){
+       return res.status(400).json({success:false,message:'No data found!'})
+      }
+      
+      const searchEmployees = [];
+    
+      for (const employee of employees) {
+          searchEmployees.push({
+                  _id: employee._id,
+                  fullName: employee.fullName,
+                  position: employee.position,
+                  image: employee.image,
+          });
+        
+      }
+
+      if (searchEmployees.length === 0) { return res.status(300).json({message: 'No employees found' }); }
+    
+     return res.status(200).json({ success:true,  searchEmployees, });
+  
+    } catch (error) {
+      console.error('Error searching employees:', error);
+      return res.status(500).json({success:false, message: 'Server error' });
+    }
+  };
+  
+// api for send reminders:
+// module.exports.sendReminders = async (req,res)=>{
+//   try {
+//       // configure nodemailer for email notification:
+//       const transporter = nodemailer.createTransport({
+//         service:'gmail',
+//         auth:{
+//           user:'nanditabisaria@1312gmail.com',
+//           pass:'xedq yvba sydt fzpf'
+//         }
+//       })
+
+//       // cron to check task deadline every hour:
+//       cron.schedule('0 * * * *',async()=>{
+//          const employees = employeeModel.find()
+//          for (const employee of employees) {
+//           // Loop through each employee's tasks
+//           const tasks = employee.tasks;
+      
+//           tasks.forEach(async (task) => {
+//             const now = new Date();
+      
+//             // Check if task's deadline has passed and reminder has not been sent yet
+//             if (task.deadline <= now && !task.isReminderSent) {
+//               // Send reminder email (using Nodemailer, for example)
+//               // Email sending logic (same as explained before)
+//               const mailOptions = {
+//                 from: 'nanditabisaria1312@gmail.com',
+//                 to: employee.email,
+//                 subject: 'Task Deadline Reminder',
+//                 text: `Dear ${employee.name},\n\nThis is a reminder that the deadline for your task "${task.title}" is approaching.\n\nPlease make sure to complete it on time.\n\nBest regards, Your Company`,
+//               };
+      
+//               transporter.sendMail(mailOptions, (error, info) => {
+//                 if (error) {
+//                   console.log('Error sending email:', error);
+//                 } else {
+//                   console.log('Reminder email sent:', info.response);
+//                 }
+//               });
+      
+//               // Update the task to mark reminder as sent
+//               task.isReminderSent = true;
+//               await employee.save();
+//             }
+//             })
+//           }
+//       })
+    
+//   } catch (error) {
+//     console.error('Error searching employees:', error);
+//     return res.status(500).json({success:false, message: 'Server error' });
+//   }
+// }

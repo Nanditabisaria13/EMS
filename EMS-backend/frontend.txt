@@ -1,0 +1,643 @@
+To integrate the backend functionalities into a **React and TailwindCSS** frontend, I'll guide you through creating components for each of the backend functionalities. The steps will include creating the necessary frontend components, using React Router for navigation, and integrating the backend API calls.
+
+### Steps for Building the Frontend
+
+1. **Setup React Project with TailwindCSS**
+   
+   If you haven't already set up your React project with TailwindCSS, you can do it using the following steps:
+
+   ```bash
+   npx create-react-app employee-management
+   cd employee-management
+   npm install tailwindcss postcss autoprefixer
+   npx tailwindcss init
+   ```
+
+   Create a `tailwind.config.js` file, if not already created, and then configure it as follows:
+
+   ```js
+   // tailwind.config.js
+   module.exports = {
+     content: [
+       "./src/**/*.{html,js,jsx,ts,tsx}",
+     ],
+     theme: {
+       extend: {},
+     },
+     plugins: [],
+   }
+   ```
+
+   In `src/index.css`, import the TailwindCSS styles:
+
+   ```css
+   /* src/index.css */
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
+
+   Then, you can import `index.css` in your `index.js` file:
+
+   ```js
+   // src/index.js
+   import './index.css';
+   import React from 'react';
+   import ReactDOM from 'react-dom';
+   import App from './App';
+
+   ReactDOM.render(
+     <React.StrictMode>
+       <App />
+     </React.StrictMode>,
+     document.getElementById('root')
+   );
+   ```
+
+### 2. **Setup React Router**
+
+To navigate between different pages (e.g., profile, task assignment, etc.), you'll need **React Router**:
+
+```bash
+npm install react-router-dom
+```
+
+### 3. **Basic Components and Pages Structure**
+
+For each feature (e.g., update profile, assign tasks, mark tasks completed), we'll create a corresponding component.
+
+### Example Project Structure:
+
+```
+src/
+  components/
+    TaskHistory.js
+    TaskSummary.js
+    Profile.js
+    AssignTask.js
+    ChangePassword.js
+  pages/
+    Dashboard.js
+    TaskList.js
+    EmployeeProfile.js
+    AdminDashboard.js
+  services/
+    api.js
+  App.js
+```
+
+### 4. **Components with TailwindCSS Styling**
+
+Here’s how you can create these components with TailwindCSS for responsiveness:
+
+---
+
+#### **1. Profile Component (Employee Profile)**
+
+**`Profile.js`**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Profile = ({ employeeId }) => {
+  const [employee, setEmployee] = useState({});
+  const [formData, setFormData] = useState({
+    firstname: '',
+    email: '',
+    password: ''
+  });
+
+  useEffect(() => {
+    axios.get(`/api/employee/${employeeId}`)
+      .then(response => {
+        setEmployee(response.data);
+        setFormData({
+          firstname: response.data.firstname,
+          email: response.data.email,
+          password: ''
+        });
+      })
+      .catch(error => console.error(error));
+  }, [employeeId]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.put(`/api/employee/${employeeId}/profile`, formData)
+      .then(response => {
+        setEmployee(response.data);
+        alert('Profile updated successfully');
+      })
+      .catch(error => console.error(error));
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-5">
+      <h2 className="text-2xl font-bold mb-4">Update Profile</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">First Name</label>
+          <input
+            type="text"
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          Update Profile
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Profile;
+```
+
+---
+
+#### **2. Task History Component (Employee Tasks)**
+
+**`TaskHistory.js`**
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const TaskHistory = ({ employeeId }) => {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/api/employee/${employeeId}/tasks`)
+      .then(response => setTasks(response.data))
+      .catch(error => console.error(error));
+  }, [employeeId]);
+
+  return (
+    <div className="max-w-4xl mx-auto p-5">
+      <h2 className="text-2xl font-bold mb-4">Task History</h2>
+      <div className="space-y-4">
+        {tasks.map(task => (
+          <div key={task._id} className="p-4 border rounded-md">
+            <h3 className="text-lg font-semibold">{task.title}</h3>
+            <p>{task.description}</p>
+            <p><strong>Status:</strong> {task.completed ? 'Completed' : task.failed ? 'Failed' : 'In Progress'}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default TaskHistory;
+```
+
+---
+
+#### **3. Admin Dashboard Component**
+
+**`AdminDashboard.js`**
+
+```jsx
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const AdminDashboard = () => {
+  const [taskSummary, setTaskSummary] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/admin/dashboard')
+      .then(response => setTaskSummary(response.data))
+      .catch(error => console.error(error));
+  }, []);
+
+  return (
+    <div className="max-w-6xl mx-auto p-5">
+      <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
+      <div className="space-y-4">
+        {taskSummary.map((summary, index) => (
+          <div key={index} className="p-4 border rounded-md">
+            <h3 className="text-lg font-semibold">{summary.employee}</h3>
+            <p><strong>Total Tasks:</strong> {summary.tasks}</p>
+            <p><strong>Active Tasks:</strong> {summary.activeTasks}</p>
+            <p><strong>Completed Tasks:</strong> {summary.completedTasks}</p>
+            <p><strong>Failed Tasks:</strong> {summary.failedTasks}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;
+```
+
+---
+
+#### **4. Change Password Component (Employee)**
+
+**`ChangePassword.js`**
+
+```jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const ChangePassword = ({ employeeId }) => {
+  const [formData, setFormData] = useState({
+    currentPassword: '',
+    newPassword: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.put(`/api/employee/${employeeId}/password`, formData)
+      .then(response => {
+        alert('Password updated successfully');
+      })
+      .catch(error => console.error(error));
+  };
+
+  return (
+    <div className="max-w-md mx-auto p-5">
+      <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Current Password</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={formData.currentPassword}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">New Password</label>
+          <input
+            type="password"
+            name="newPassword"
+            value={formData.newPassword}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          Change Password
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ChangePassword;
+```
+
+### 5. **Wrap Everything Together with React Router**
+
+Finally, use **React Router** to link these pages together.
+
+**`App.js`**
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AdminDashboard from './pages/AdminDashboard';
+import EmployeeProfile from './pages/EmployeeProfile';
+import TaskHistory from './components/TaskHistory';
+import ChangePassword from './components/ChangePassword';
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/employee/:id/profile" element={<EmployeeProfile />} />
+        <Route path="/employee/:id/tasks" element={<TaskHistory />} />
+        <Route path="/employee/:id/change-password" element={<ChangePassword />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
+```
+
+### Conclusion:
+
+This setup covers several key features of your employee management system, including profile updates, task history, task assignment, password changes, and the admin dashboard. By using **React**, **TailwindCSS**, and **React Router**, you can create a responsive and user-friendly frontend interface for interacting with your backend API.
+
+
+
+To implement this workflow, we need to make some changes to the backend and frontend code. Here's the scenario you described:
+
+New Task Assignment: When a new task is assigned to an employee, it will appear in the "New Tasks" section for that employee.
+Task Acceptance: When an employee accepts a task, the task status changes from newTask to active (and should move to the "Active Tasks" section).
+We'll achieve this by:
+
+Adding an API endpoint for marking a task as accepted.
+Updating the frontend to handle task state transitions.
+1. Backend Changes
+You need two functionalities in the backend:
+
+Assign New Task: This will create a task and add it as newTask for an employee.
+Accept Task: When the employee accepts the task, it will change from newTask to active.
+1.1 API to Assign a New Task (addNewTask)
+This function is already implemented, but to ensure the task is properly marked as a newTask, we need to make sure this is the correct status when we create the task.
+
+javascript
+Copy
+module.exports.addNewTask = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { employeeEmail, title, description, date, category } = req.body;
+        const employee = await employeeModel.findOne({ email: employeeEmail });
+
+        if (!employee) {
+            return res.status(400).json({ success: false, message: "Employee Not Found!" });
+        }
+
+        const newTask = {
+            taskId: employee.tasks.length,
+            title,
+            description,
+            date,
+            category,
+            active: false,  // initially set as false, meaning new task
+            newTask: true,  // mark the task as new
+            completed: false,
+            failed: false
+        };
+
+        employee.tasks.push(newTask);
+        employee.taskNumbers.newTask += 1;
+        await employee.save();
+
+        return res.status(200).json({ success: true, message: "Task successfully assigned to employee!" });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+1.2 API to Accept a Task (acceptTask)
+This function will change the task status from newTask to active.
+
+javascript
+Copy
+module.exports.acceptTask = async (req, res) => {
+    try {
+        const { employeeEmail, taskId } = req.body;
+        const employee = await employeeModel.findOne({ email: employeeEmail });
+
+        if (!employee) {
+            return res.status(400).json({ success: false, message: "Employee Not Found!" });
+        }
+
+        const task = employee.tasks.find(t => t.taskId === taskId);
+
+        if (!task) {
+            return res.status(400).json({ success: false, message: "Task Not Found!" });
+        }
+
+        if (task.newTask) {
+            // Move task from newTask to active
+            task.newTask = false;
+            task.active = true;
+
+            // Update task count numbers
+            employee.taskNumbers.newTask -= 1;
+            employee.taskNumbers.active += 1;
+
+            await employee.save();
+
+            return res.status(200).json({ success: true, message: "Task has been accepted and moved to active tasks." });
+        } else {
+            return res.status(400).json({ success: false, message: "Task has already been accepted." });
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+In this acceptTask function, we:
+
+Look up the employee by email.
+Find the task by taskId.
+Check if the task is marked as newTask and if so, update it to active.
+Update the task numbers (decrement newTask count and increment active count).
+2. Frontend Changes
+The frontend will need:
+
+A button to accept the task in the "New Tasks" section.
+An API call to notify the backend that the task is accepted.
+State updates to move tasks between "New Tasks" and "Active Tasks" sections.
+2.1 Task List Page (GetEmployeeTasks.jsx)
+We'll modify the frontend to handle task acceptance and update the task status.
+
+javascript
+Copy
+import React, { useContext, useEffect, useState } from 'react'
+import Sidebar from '../../components/common/Sidebar'
+import AdminNavbar from '../../components/Admin/AdminNavbar'
+import { AdminContext } from '../../context/AdminContext'
+import { useParams } from 'react-router-dom'
+import AcceptTask from '../../components/TaskList/AcceptTask'
+import NewTask from '../../components/TaskList/NewTask'
+import CompleteTask from '../../components/TaskList/CompleteTask'
+import FailedTask from '../../components/TaskList/FailedTask'
+import axios from 'axios'
+
+const GetEmployeeTasks = () => {
+  const { getSpecificEmployee, employee } = useContext(AdminContext)
+  const { employeeId } = useParams()
+
+  useEffect(() => {
+    getSpecificEmployee(employeeId)
+  }, [employeeId])
+
+  if (!employee) return <p>Loading...</p>;
+
+  // Separate tasks based on status
+  const activeTasks = employee.tasks.filter(task => task.active);
+  const newTasks = employee.tasks.filter(task => task.newTask).slice(-3);  // Latest 3 new tasks
+  const completedTasks = employee.tasks.filter(task => task.completed);
+  const failedTasks = employee.tasks.filter(task => task.failed);
+
+  // Function to accept a task
+  const acceptTask = async (taskId) => {
+    try {
+      const response = await axios.post('/api/employee/accept-task', {
+        employeeEmail: employee.email,
+        taskId: taskId
+      });
+      if (response.data.success) {
+        // Update the task list after acceptance
+        getSpecificEmployee(employeeId);  // Re-fetch employee tasks to reflect the change
+      }
+    } catch (error) {
+      console.error("Error accepting task:", error);
+    }
+  };
+
+  return (
+    <div className='w-full flex items-start'>
+      <Sidebar />
+      <div className='w-full ml-32 md:ml-72'>
+        <AdminNavbar />
+        <div className='px-4 py-3 w-full bg-slate-50'>
+          <h1 className='font-medium text-2xl text-neutral-800'>Employee Tasks</h1>
+
+          <div id='tasklist' className='h-[55%] overflow-x-auto w-full py-5 flex items-center justify-start gap-5 flex-nowrap mt-10'>
+            
+            {/* Active Tasks */}
+            <div className='flex flex-col gap-4'>
+              <h1 className='font-medium text-2xl text-neutral-800'>Active Tasks</h1>
+              {activeTasks.map((task, index) => (
+                <AcceptTask key={index} data={task} />
+              ))}
+            </div>
+
+            {/* New Tasks */}
+            <div className='flex flex-col gap-4'>
+              <h1 className='font-medium text-2xl text-neutral-800'>New Tasks</h1>
+              {newTasks.map((task, index) => (
+                <NewTask key={index} data={task} onAccept={() => acceptTask(task.taskId)} />
+              ))}
+            </div>
+
+            {/* Completed Tasks */}
+            <div className='flex flex-col gap-4'>
+              <h1 className='font-medium text-2xl text-neutral-800'>Completed Tasks</h1>
+              {completedTasks.map((task, index) => (
+                <CompleteTask key={index} data={task} />
+              ))}
+            </div>
+
+            {/* Failed Tasks */}
+            <div className='flex flex-col gap-4'>
+              <h1 className='font-medium text-2xl text-neutral-800'>Failed Tasks</h1>
+              {failedTasks.map((task, index) => (
+                <FailedTask key={index} data={task} />
+              ))}
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default GetEmployeeTasks;
+2.2 New Task Component (NewTask.jsx)
+This component will include an "Accept" button to change the task status.
+
+javascript
+Copy
+import React from 'react'
+
+const NewTask = ({ data, onAccept }) => {
+  return (
+    <div className='task-card'>
+      <h2>{data.title}</h2>
+      <p>{data.description}</p>
+      <button className="btn btn-accept" onClick={onAccept}>Accept Task</button>
+    </div>
+  )
+}
+
+export default NewTask;
+3. Summary
+Backend: We added an acceptTask API to move tasks from newTask to active.
+Frontend: We added an "Accept Task" button in the NewTask component. When clicked, it calls the acceptTask function to update the task status in the backend and then updates the frontend.
+Now, when a task is assigned to an employee, it will show up in the New Tasks section. After the employee accepts the task, it will move to the Active Tasks section.
+
+
+      <div id='tasklist' className='h-[55%] overflow-x-auto w-full py-5 flex flex-col items-start justify-start gap-5 flex-nowrap mt-10'>
+          
+            {/* New Tasks */}
+            { profile.taskNumbers.active>0 &&
+            <div className='flex flex-col gap-4'>
+            <h1 className='font-medium text-2xl text-neutral-800 dark:text-white'>New Tasks</h1>
+            <div className='flex items-start justify-center gap-4 flex-1 bg-yellow-300 overflow-x-auto w-full p-3'>
+            {newTasks.map((task, index) => (
+              <NewTask key={index} data={task} />
+            ))}
+            </div>
+          </div>
+          }
+
+          {/* Active Tasks */}
+          {profile.taskNumbers.active>0 &&
+          <div className='flex flex-col gap-4'>
+          <h1 className='font-medium text-2xl text-neutral-800 dark:text-white'>Active Tasks</h1>
+            <div className='flex items-start justify-center gap-4 flex-1 bg-blue-300 overflow-x-auto w-full p-3'>
+            {activeTasks.map((task, index) => (
+              <AcceptTask key={index} data={task} />
+            ))}
+            </div>
+          </div>
+          }
+
+          {/* Completed Tasks */}
+          {profile.taskNumbers.completed>0 &&
+          <div className='flex flex-col gap-4 '>
+            <h1 className='font-medium text-2xl text-neutral-800 dark:text-white bg-emerald-500'>Completed Tasks</h1>
+            <div className='flex flex-col items-start justify-center gap-4 flex-1 bg-green-300 overflow-x-auto w-full p-3'>
+            {completedTasks.map((task, index) => (
+              <CompleteTask key={index} data={task} />
+            ))}
+            </div>
+          </div>
+      }
+
+          {/* Failed Tasks */}
+          {profile.taskNumbers.failed>0&&
+          <div className='flex flex-col gap-4'>
+          <h1 className='font-medium text-2xl text-neutral-800 dark:text-white'>Failed Tasks</h1>
+          <div className='flex items-start justify-center gap-4 flex-1 bg-red-300 overflow-x-auto w-full p-3'>
+            {failedTasks.map((task, index) => (
+              <FailedTask key={index} data={task} />
+            ))}
+             </div>
+          </div>
+     }
+        </div>
+      
