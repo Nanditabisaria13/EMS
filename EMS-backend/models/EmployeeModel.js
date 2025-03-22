@@ -12,7 +12,7 @@ const employeeSchema = new mongoose.Schema({
 
     email:{type:String,required:true, unique:true, minlength:[5,'email must have at least 5 characters long']},
     password:{type:String,required:true},
-    image:{type:String,default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRowqmOkEC3VKpAxaZLa8ipGd6cqIEr2-BWmw&s'},
+    image:{type:String,default:'https://cdn-icons-png.freepik.com/256/10987/10987751.png?ga=GA1.1.1367734566.1715677570&semt=ais_hybrid'},
     dob:{type:String, default:"Not Selected"},
     gender:{type:String, default:"Not Selected"},
     phone:{type:String, default:"0000000000"},

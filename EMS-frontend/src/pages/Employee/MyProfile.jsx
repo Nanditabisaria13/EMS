@@ -1,209 +1,365 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Sidebar from '../../components/common/Sidebar'
-import EmployeeNavbar from '../../components/Employee/EmployeeNavbar'
-import { EmployeeContext } from '../../context/EmployeeContext';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { assets } from '../../assets/assets';
+import React, { useContext, useEffect, useState } from "react";
+import Sidebar from "../../components/common/Sidebar";
+import EmployeeNavbar from "../../components/Employee/EmployeeNavbar";
+import { EmployeeContext } from "../../context/EmployeeContext";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { assets } from "../../assets/assets";
 
 const MyProfile = () => {
+  const { profile, setProfile, getMyProfile, backendUrl, token } =
+    useContext(EmployeeContext);
 
-  const { profile,setProfile,getMyProfile,backendUrl,token } = useContext(EmployeeContext);
-  
-            const[isEdit,setIsEdit] = useState(false)
-            const[image,setImage] = useState(null)
+  const [isEdit, setIsEdit] = useState(false);
+  const [image, setImage] = useState(null);
 
-            useEffect(() => {
-              getMyProfile(); 
-            }, []);
-           
-            if (!profile) return <p>Loading...</p>;
-          
-            const updateProfile = async () => {
-              try {
-                const formData = new FormData()
-    
-                formData.append('firstName', profile.fullName.firstName);
-                formData.append('lastName', profile.fullName.lastName);
-                formData.append('email',profile.email)
-                formData.append('password',profile.password)
-                formData.append('dob',profile.dob)
-                formData.append('phone',profile.phone)
-                formData.append('gender',profile.gender)
-                formData.append('position',profile.position)
-                formData.append('salary',profile.salary)
-                formData.append('address',profile.address)
-                formData.append('joiningDate',profile.joiningDate)
-                formData.append('department',profile.department)
-                image && formData.append('image',image)
-      
-                const {data} = await axios.post(backendUrl + '/api/employee/update-profile',formData,{headers:{token}})
-                if(data.success){
-                  setProfile(data.updatedEmployee)
-                  toast.success(data.message)
-                  setIsEdit(false)
-                  setImage(null)
-                } else{
-                  toast.error(data.message)
-                }
-               } catch (error) {
-                console.log(error)
-                toast.error(error.message)
-               }
-            };
+  useEffect(() => {
+    getMyProfile();
+  }, []);
 
+  if (!profile) return <p>Loading...</p>;
+
+  const updateProfile = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("firstName", profile.fullName.firstName);
+      formData.append("lastName", profile.fullName.lastName);
+      formData.append("email", profile.email);
+      formData.append("password", profile.password);
+      formData.append("dob", profile.dob);
+      formData.append("phone", profile.phone);
+      formData.append("gender", profile.gender);
+      formData.append("position", profile.position);
+      formData.append("salary", profile.salary);
+      formData.append("address", profile.address);
+      formData.append("joiningDate", profile.joiningDate);
+      formData.append("department", profile.department);
+      image && formData.append("image", image);
+
+      const { data } = await axios.post(
+        backendUrl + "/api/employee/update-profile",
+        formData,
+        { headers: { token } }
+      );
+      if (data.success) {
+        setProfile(data.updatedEmployee);
+        toast.success(data.message);
+        setIsEdit(false);
+        setImage(null);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
 
   return (
-    <div className='w-full flex'>
-    <Sidebar/>
-      <div className='w-full  sm:ml-[8.5rem] md:ml-[19.6rem]'>
-       <EmployeeNavbar/>
-       
-       <div className='flex flex-col md:flex-row text-sm items-center justify-center gap-10 md:gap-24 w-full bg-white drop-shadow-md
-               dark:bg-transparent dark:border-[#535353]  p-6 mt-20'>
-          <div className='flex flex-col gap-2 items-center'>
+    <div className="w-full flex">
+      <Sidebar />
+      <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem]">
+        <EmployeeNavbar />
+
+        <div
+          className="flex flex-col md:flex-row text-sm items-center justify-center gap-10 md:gap-24 w-full bg-white drop-shadow-md
+               dark:bg-transparent dark:border-[#535353]  p-6 mt-20"
+        >
+          <div className="flex flex-col gap-2 items-center">
             {isEdit ? (
-              <label htmlFor='image'>
-                <div className='inline-block relative cursor-pointer'>
-                  <img className='w-36 rounded opacity-75' src={image ? URL.createObjectURL(image) : assets.uploadImage} alt="profile" />
+              <label htmlFor="image">
+                <div className="inline-block relative cursor-pointer">
+                  <img
+                    className="w-36 rounded opacity-75"
+                    src={
+                      image ? URL.createObjectURL(image) : assets.uploadImage
+                    }
+                    alt="profile"
+                  />
                 </div>
-                <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden />
+                <input
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                  id="image"
+                  hidden
+                />
               </label>
             ) : (
-              <img className='w-72 h-68 rounded-lg' src={profile.image || assets.uploadImage} alt="" />
+              <img
+                className="w-72 h-68 rounded-lg"
+                src={profile.image || assets.uploadImage}
+                alt=""
+              />
             )}
 
-            <div className='flex gap-2'>
+            <div className="flex gap-2">
               {isEdit ? (
-                <input className='bg-gray-50 text-3xl font-medium max-w-24 mt-4 dark:bg-transparent' type="text" value={profile.fullName.firstName} 
-                onChange={(e) => setProfile((prev) => ({ ...prev, fullName: { ...prev.fullName, firstName: e.target.value } }))} />
+                <input
+                  className="bg-gray-50 text-3xl font-medium max-w-24 mt-4 dark:bg-transparent"
+                  type="text"
+                  value={profile.fullName.firstName}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      fullName: { ...prev.fullName, firstName: e.target.value },
+                    }))
+                  }
+                />
               ) : (
-                <p className='font-medium text-3xl text-neutral-800 mt-4 dark:text-white'>{profile.fullName.firstName}</p>
+                <p className="font-medium text-3xl text-neutral-800 mt-4 dark:text-white">
+                  {profile.fullName.firstName}
+                </p>
               )}
 
-              {isEdit?(
-                <input className='bg-gray-50 text-3xl font-medium max-w-28 mt-4 dark:bg-transparent' type="text" value={profile.fullName.lastName} 
-                onChange={(e) => setProfile((prev) => ({ ...prev, fullName: { ...prev.fullName, lastName: e.target.value } }))} />
+              {isEdit ? (
+                <input
+                  className="bg-gray-50 text-3xl font-medium max-w-28 mt-4 dark:bg-transparent"
+                  type="text"
+                  value={profile.fullName.lastName}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      fullName: { ...prev.fullName, lastName: e.target.value },
+                    }))
+                  }
+                />
               ) : (
-                <p className='font-medium text-3xl text-neutral-800 mt-4 dark:text-white'>{profile.fullName.lastName}</p>
+                <p className="font-medium text-3xl text-neutral-800 mt-4 dark:text-white">
+                  {profile.fullName.lastName}
+                </p>
               )}
             </div>
 
-            <div className='flex flex-col gap-1 items-center mt-2'>
-              <div className='px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
-               dark:bg-[#1a1a1a] dark:border-[#535353]'>
-                <p className='text-neutral-700 font-medium text-base dark:text-white'>Email</p>
+            <div className="flex flex-col gap-1 items-center mt-2">
+              <div
+                className="px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
+               dark:bg-[#1a1a1a] dark:border-[#535353]"
+              >
+                <p className="text-neutral-700 font-medium text-base dark:text-white">
+                  Email
+                </p>
                 {isEdit ? (
-                  <input className='bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent' type="text" value={profile.email} 
-                  onChange={(e) => setProfile(prev=>({...prev,email:e.target.value}))} />
+                  <input
+                    className="bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent"
+                    type="text"
+                    value={profile.email}
+                    onChange={(e) =>
+                      setProfile((prev) => ({ ...prev, email: e.target.value }))
+                    }
+                  />
                 ) : (
-                  <p className='font-medium text-lg text-neutral-800 dark:text-white'>{profile.email}</p>
+                  <p className="font-medium text-lg text-neutral-800 dark:text-white">
+                    {profile.email}
+                  </p>
                 )}
               </div>
 
-              <div className='px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
-               dark:bg-[#1a1a1a] dark:border-[#535353]'>
-                <p className='text-neutral-700 font-medium text-base dark:text-white'>Position</p>
+              <div
+                className="px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
+               dark:bg-[#1a1a1a] dark:border-[#535353]"
+              >
+                <p className="text-neutral-700 font-medium text-base dark:text-white">
+                  Position
+                </p>
                 {isEdit ? (
-                  <input className='bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent' type="text" value={profile.position} 
-                  onChange={(e) =>setProfile(prev=>({...prev,position:e.target.value}))} />
+                  <input
+                    className="bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent"
+                    type="text"
+                    value={profile.position}
+                    onChange={(e) =>
+                      setProfile((prev) => ({
+                        ...prev,
+                        position: e.target.value,
+                      }))
+                    }
+                  />
                 ) : (
-                  <p className='font-medium text-lg text-neutral-800 dark:text-white'>{profile.position}</p>
+                  <p className="font-medium text-lg text-neutral-800 dark:text-white">
+                    {profile.position}
+                  </p>
                 )}
               </div>
 
-              <div className='px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
-               dark:bg-[#1a1a1a] dark:border-[#535353]'>
-                <p className='text-neutral-700 font-medium text-base dark:text-white'>Department</p>
+              <div
+                className="px-4 py-1 bg-white drop-shadow-md border border-zinc-300 rounded-lg w-full
+               dark:bg-[#1a1a1a] dark:border-[#535353]"
+              >
+                <p className="text-neutral-700 font-medium text-base dark:text-white">
+                  Department
+                </p>
                 {isEdit ? (
-                  <input className='bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent' type="text" value={profile.department} 
-                  onChange={(e) => setProfile(prev=>({...prev,department:e.target.value}))} />
+                  <input
+                    className="bg-gray-50 text-xl font-medium max-w-60 mt-4 dark:bg-transparent"
+                    type="text"
+                    value={profile.department}
+                    onChange={(e) =>
+                      setProfile((prev) => ({
+                        ...prev,
+                        department: e.target.value,
+                      }))
+                    }
+                  />
                 ) : (
-                  <p className='font-medium text-lg text-neutral-800 dark:text-white'>{profile.department}</p>
+                  <p className="font-medium text-lg text-neutral-800 dark:text-white">
+                    {profile.department}
+                  </p>
                 )}
               </div>
             </div>
           </div>
 
-          <div className='flex flex-col gap-5'>
-            <div className='flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
-             dark:bg-[#1a1a1a] dark:border-[#535353]'>
-              <p className='text-neutral-900 text-lg underline mt-3 dark:text-white'>BASIC INFORMATION</p>
-              <div className='grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500'>
-                <p className='font-medium text-base text-neutral-700 dark:text-white'>Gender:</p>
+          <div className="flex flex-col gap-5">
+            <div
+              className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
+             dark:bg-[#1a1a1a] dark:border-[#535353]"
+            >
+              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+                BASIC INFORMATION
+              </p>
+              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">
+                <p className="font-medium text-base text-neutral-700 dark:text-white">
+                  Gender:
+                </p>
                 {isEdit ? (
-                  <select className='max-w-20 bg-gray-100 dark:bg-transparent' value={profile.gender} 
-                  onChange={(e) => setProfile(prev=>({...prev,lastName:e.target.value}))}>
+                  <select
+                    className="max-w-20 bg-gray-100 dark:bg-transparent"
+                    value={profile.gender}
+                    onChange={(e) =>
+                      setProfile((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                      }))
+                    }
+                  >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 ) : (
-                  <p className='text-gray-600 text-base dark:text-white'>{profile.gender}</p>
+                  <p className="text-gray-600 text-base dark:text-white">
+                    {profile.gender}
+                  </p>
                 )}
 
-                <p className='font-medium text-base text-neutral-700 dark:text-white'>DOB:</p>
+                <p className="font-medium text-base text-neutral-700 dark:text-white">
+                  DOB:
+                </p>
                 {isEdit ? (
-                  <input className='max-w-28 bg-gray-100 dark:bg-transparent' type="date" value={profile.dob} 
-                  onChange={(e) => setProfile(prev=>({...prev,dob:e.target.value}))} />
+                  <input
+                    className="max-w-28 bg-gray-100 dark:bg-transparent"
+                    type="date"
+                    value={profile.dob}
+                    onChange={(e) =>
+                      setProfile((prev) => ({ ...prev, dob: e.target.value }))
+                    }
+                  />
                 ) : (
-                  <p className='text-gray-600 text-base dark:text-white'>{profile.dob}</p>
+                  <p className="text-gray-600 text-base dark:text-white">
+                    {profile.dob}
+                  </p>
                 )}
 
-                <p className='font-medium text-base text-neutral-700 dark:text-white'>Salary:</p>
+                <p className="font-medium text-base text-neutral-700 dark:text-white">
+                  Salary:
+                </p>
                 {isEdit ? (
-                  <input className='max-w-28 bg-gray-100 dark:bg-transparent' type="number" value={profile.salary} 
-                  onChange={(e) =>setProfile(prev=>({...prev,salary:e.target.value}))} />
+                  <input
+                    className="max-w-28 bg-gray-100 dark:bg-transparent"
+                    type="number"
+                    value={profile.salary}
+                    onChange={(e) =>
+                      setProfile((prev) => ({
+                        ...prev,
+                        salary: e.target.value,
+                      }))
+                    }
+                  />
                 ) : (
-                  <p className='text-gray-600 text-base dark:text-gray-100'>{profile.salary}</p>
+                  <p className="text-gray-600 text-base dark:text-gray-100">
+                    {profile.salary}
+                  </p>
                 )}
 
-                <p className='font-medium text-base text-neutral-700 dark:text-neutral-100'>Joining Date:</p>
-                <p className='text-gray-600 text-base dark:text-gray-100'>{profile.joiningDate}</p>
+                <p className="font-medium text-base text-neutral-700 dark:text-neutral-100">
+                  Joining Date:
+                </p>
+                <p className="text-gray-600 text-base dark:text-gray-100">
+                  {profile.joiningDate}
+                </p>
               </div>
             </div>
 
-            <div className='flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
-             dark:bg-[#1a1a1a] dark:border-[#535353]'>
-              <p className='text-neutral-900 text-lg underline mt-3 dark:text-white'>CONTACT INFORMATION</p>
-              <div className='grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500'>
-                <p className='font-medium text-base text-neutral-700 dark:text-white'>Phone:</p>
+            <div
+              className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
+             dark:bg-[#1a1a1a] dark:border-[#535353]"
+            >
+              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+                CONTACT INFORMATION
+              </p>
+              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">
+                <p className="font-medium text-base text-neutral-700 dark:text-white">
+                  Phone:
+                </p>
                 {isEdit ? (
-                  <input className='bg-gray-100 dark:bg-transparent max-w-52' type="text" value={profile.phone} 
-                  onChange={(e) =>setProfile(prev=>({...prev,phone:e.target.value}))} />
+                  <input
+                    className="bg-gray-100 dark:bg-transparent max-w-52"
+                    type="text"
+                    value={profile.phone}
+                    onChange={(e) =>
+                      setProfile((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                  />
                 ) : (
-                  <p className='text-blue-400 text-base'>{profile.phone}</p>
+                  <p className="text-blue-400 text-base">{profile.phone}</p>
                 )}
 
-                <p className='font-medium text-base text-neutral-700 dark:text-white'>Address:</p>
+                <p className="font-medium text-base text-neutral-700 dark:text-white">
+                  Address:
+                </p>
                 {isEdit ? (
-                  <input className='bg-gray-50 dark:bg-transparent' type="text" value={profile.address} 
-                  onChange={(e) =>setProfile(prev=>({...prev,address:e.target.value}))} />
+                  <input
+                    className="bg-gray-50 dark:bg-transparent"
+                    type="text"
+                    value={profile.address}
+                    onChange={(e) =>
+                      setProfile((prev) => ({
+                        ...prev,
+                        address: e.target.value,
+                      }))
+                    }
+                  />
                 ) : (
-                  <p className='text-gray-500 text-base dark:text-white'>{profile.address}</p>
+                  <p className="text-gray-500 text-base dark:text-white">
+                    {profile.address}
+                  </p>
                 )}
               </div>
             </div>
 
-            <div className='mt-10 flex gap-2'>
+            <div className="mt-10 flex gap-2">
               {isEdit ? (
-                <button className='border border-primary px-10 py-2 rounded-full bg-green-500 hover:bg-emerald-800
-                 hover:text-white transition-all text-xl font-medium'  onClick={()=>updateProfile()}>
+                <button
+                  className="border border-primary px-10 py-2 rounded-full bg-green-500 hover:bg-emerald-800
+                 hover:text-white transition-all text-xl font-medium"
+                  onClick={() => updateProfile()}
+                >
                   Save Information
                 </button>
               ) : (
-                <button className='border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-800
-                 hover:text-white transition-all text-xl font-medium' onClick={() => setIsEdit(true)}>
+                <button
+                  className="border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-800
+                 hover:text-white transition-all text-xl font-medium"
+                  onClick={() => setIsEdit(true)}
+                >
                   Edit
                 </button>
               )}
-              
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
 
-   </div>
-       </div>
-  )
-}
-
-export default MyProfile
+export default MyProfile;

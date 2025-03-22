@@ -357,12 +357,10 @@ module.exports.addNewTask = async(req,res)=>{
 }
 
 // api for update the task:
-module.exports.updateTask = async(req,res)=>{
+ module.exports.updateTask = async(req,res)=>{
     try {
-        // const {  } = req.params;
         const { title, description, category, date, deadline,employeeId, taskId } = req.body;
 
-        // Step 1: Update the task directly using findOneAndUpdate
         const updatedEmployee = await employeeModel.findOneAndUpdate(
             { _id: employeeId, "tasks.taskId": parseInt(taskId) },  // Find employee and task by taskId
             {
@@ -374,14 +372,12 @@ module.exports.updateTask = async(req,res)=>{
                     "tasks.$.deadline": deadline
                 }
             },
-            { new: true }  // Return the updated document
+            { new: true }  
         );
 
         if (!updatedEmployee) {
             return res.status(400).json({ success: false, message: "Employee or Task not found!" });
         }
-
-        // Return the updated employee with the modified task
         return res.status(200).json({ success: true, message: "Task Updated Successfully", employee: updatedEmployee });
     } catch (error) {
         console.error('Error updating task:', error);
@@ -398,15 +394,12 @@ module.exports.deleteTask = async(req,res)=>{
         return res.status(400).json({success:false, message:"Employee not found"})
        }
       
-    //    find task by taskId
        const taskIndex = employee.tasks.findIndex(task=>task.taskId === parseInt(taskId))
        if(taskIndex=== -1){
         return res.status(400).json({success:false,messge:"Task not found!"})
        }
 
-    //    remove the task from the array:
       employee.tasks.splice(taskIndex,1)
-      // employee.taskNumbers.newTask +=1
       employee.taskNumbers.active -=1
 
     //   resign the task Id for the remaining task:
@@ -476,7 +469,7 @@ module.exports.filterEmployee = async(req,res)=>{
           return res.status(400).json({ message: 'Invalid task status. Must be one of: active, completed, failed' });
         }
     
-  
+
         const employees = await employeeModel.find();
         const filteredEmployees = [];
     
@@ -590,25 +583,20 @@ module.exports.deleteDepartment = async (req, res) => {
       const { departmentName } = req.body; 
       const adminId = req.adminId
       
-      // Check if the department exists
       const department = await departmentModel.findOne({ departmentName, adminId });
       if (!department) {
         return res.status(404).json({ success: false, message: 'Department not found' });
       }
   
-      // Check if any employees are associated with this department
       const employeesInDepartment = await employeeModel.find({ department: departmentName });
   
-      // If there are employees in the department, you can either delete them or just unassign the department
       if (employeesInDepartment.length > 0) {
-        // Optionally, you can choose to update the employees and unassign the department
         await employeeModel.updateMany(
           { department: departmentName },
           { $set: { department: 'No Department' } } // Unassign employees from this department
         );
       }
   
-      // Now delete the department
       await departmentModel.findOneAndDelete({ departmentName });
   
       return res.status(200).json({ success: true, message:'Department deleted successfully' });
@@ -652,57 +640,3 @@ module.exports.searchEmployeesByName = async (req, res) => {
     }
   };
   
-// api for send reminders:
-// module.exports.sendReminders = async (req,res)=>{
-//   try {
-//       // configure nodemailer for email notification:
-//       const transporter = nodemailer.createTransport({
-//         service:'gmail',
-//         auth:{
-//           user:'nanditabisaria@1312gmail.com',
-//           pass:'xedq yvba sydt fzpf'
-//         }
-//       })
-
-//       // cron to check task deadline every hour:
-//       cron.schedule('0 * * * *',async()=>{
-//          const employees = employeeModel.find()
-//          for (const employee of employees) {
-//           // Loop through each employee's tasks
-//           const tasks = employee.tasks;
-      
-//           tasks.forEach(async (task) => {
-//             const now = new Date();
-      
-//             // Check if task's deadline has passed and reminder has not been sent yet
-//             if (task.deadline <= now && !task.isReminderSent) {
-//               // Send reminder email (using Nodemailer, for example)
-//               // Email sending logic (same as explained before)
-//               const mailOptions = {
-//                 from: 'nanditabisaria1312@gmail.com',
-//                 to: employee.email,
-//                 subject: 'Task Deadline Reminder',
-//                 text: `Dear ${employee.name},\n\nThis is a reminder that the deadline for your task "${task.title}" is approaching.\n\nPlease make sure to complete it on time.\n\nBest regards, Your Company`,
-//               };
-      
-//               transporter.sendMail(mailOptions, (error, info) => {
-//                 if (error) {
-//                   console.log('Error sending email:', error);
-//                 } else {
-//                   console.log('Reminder email sent:', info.response);
-//                 }
-//               });
-      
-//               // Update the task to mark reminder as sent
-//               task.isReminderSent = true;
-//               await employee.save();
-//             }
-//             })
-//           }
-//       })
-    
-//   } catch (error) {
-//     console.error('Error searching employees:', error);
-//     return res.status(500).json({success:false, message: 'Server error' });
-//   }
-// }
