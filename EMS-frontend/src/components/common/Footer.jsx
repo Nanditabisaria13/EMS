@@ -46,7 +46,7 @@ const Footer = () => {
 
       <div className="flex items-center justify-center p-3">
         <p className="text-lg text-neutral-800 font-base dark:text-neutral-200">
-          © 2024 All rights Reserved Pvt. Ltd. • Privacy • Terms• EULA •
+        &copy; {new Date().getFullYear()} EMS. All rights reserved. Pvt. Ltd. • Privacy • Terms• EULA •
           Cancellation & Refund • Corporate Information
         </p>
       </div>

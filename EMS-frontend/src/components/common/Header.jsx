@@ -13,7 +13,7 @@ const Header = () => {
           Experience Seamless Employee Management System With Our Integreted
           Dashboard{" "}
         </h2>
-        <p className="text-neutral-700 font-medium text-lg dark:text-neutral-200">
+        <p className="text-neutral-700 font-medium text-xl dark:text-neutral-200">
           E.M.S. is all-in-one employee management system platform that
           simplifies employees work authorization,work status, categories with
           its intiutive dashboards. Simplify complexities and elevate

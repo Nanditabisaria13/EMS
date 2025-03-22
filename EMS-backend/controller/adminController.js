@@ -212,7 +212,6 @@ module.exports.createEmployee = async(req,res)=>{
        const imageFile = req.file
 
        
-  
   if(!fullName || !email ||!password || !dob || !position || !gender || !phone || !department || !salary || !joiningDate || !address ||!workingType||!adminId ){
             return res.status(400).json({success:false, message:"Missing Details!"})
         }
@@ -244,7 +243,7 @@ module.exports.createEmployee = async(req,res)=>{
             image:imageUrl
         }
        
-        
+      
         const newEmployee = new employeeModel(employeeData)
          await newEmployee.save()
 

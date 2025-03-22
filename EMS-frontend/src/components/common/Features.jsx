@@ -9,7 +9,7 @@ const Features = () => {
           <h1 className="font-semibold text-3xl md:text-5xl lg:text-6xl text-emerald-900 dark:text-emerald-400">
             Monitor Employee Productivity
           </h1>
-          <p className="font-medium text-lg text-gray-500 w-10/12 dark:text-neutral-200">
+          <p className="font-medium text-xl text-gray-500 w-10/12 dark:text-neutral-200">
             Monitoting employees is challenging enough, especially if they're
             miles away. take control over your remote worker's productivity
             through daily reports on active time, activity tracking. Employees's
@@ -36,7 +36,7 @@ const Features = () => {
           <h1 className="font-semibold text-3xl md:text-5xl lg:text-6xl text-emerald-900 dark:text-emerald-400">
             Flexible Leave Management
           </h1>
-          <p className="font-medium text-lg text-gray-500 dark:text-neutral-200 w-10/12 ">
+          <p className="font-medium text-xl text-gray-500 dark:text-neutral-200 w-10/12 ">
             Leave/timeoff is an important component of a worker's experience.
             E.M.S. provides a customization platform to create you own policies
             and leave types. Workers and managers can easily view balace and the
@@ -50,7 +50,7 @@ const Features = () => {
           <h1 className="font-semibold text-3xl md:text-5xl lg:text-6xl text-emerald-900 dark:text-emerald-400">
             Secure Password Management
           </h1>
-          <p className="font-medium text-lg text-gray-500 dark:text-neutral-200 w-10/12">
+          <p className="font-medium text-xl text-gray-500 dark:text-neutral-200 w-10/12">
             Creating and sharing passwords for each of your employees can be
             taxing and prone to security threats. Effortlessly generate complex
             passwords and share them securely through us.

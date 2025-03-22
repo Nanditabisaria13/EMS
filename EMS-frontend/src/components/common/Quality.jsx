@@ -12,7 +12,7 @@ const Quality = () => {
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">
           Stay informed
         </h1>
-        <p className="text-neutral-600 font-medium dark:text-neutral-200">
+        <p className="text-neutral-600 text-lg font-medium dark:text-neutral-200">
           Manage all your resources efficiently to save time, avoid rework, and
           leave your team more time for creative work
         </p>
@@ -26,7 +26,7 @@ const Quality = () => {
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">
           Time And Leave
         </h1>
-        <p className="text-neutral-600 font-medium dark:text-neutral-200">
+        <p className="text-neutral-600  text-lg  font-medium dark:text-neutral-200">
           Track employee leaves data effortlessly and make task allocation in
           one place, keep the track of employees's task and leave details{" "}
         </p>
@@ -40,7 +40,7 @@ const Quality = () => {
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">
           Effectiveness
         </h1>
-        <p className="text-neutral-600 font-medium dark:text-neutral-200">
+        <p className="text-neutral-600 text-lg font-medium dark:text-neutral-200">
           Enhance work efficiently through streamlined processes,ensuring tasks
           are completed promptly and accurately{" "}
         </p>
