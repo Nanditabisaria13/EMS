@@ -1,4 +1,4 @@
-import emsImg from './Ems.png'
+import emsImg from './EMS.png'
 import EmsFeatureImg1 from './featureImage1.png'
 import EmsFeatureImg2 from './featureImage2.webp'
 import EmsFeatureImg3 from './featureImg3.png'

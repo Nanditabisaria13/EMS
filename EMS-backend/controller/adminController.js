@@ -7,8 +7,7 @@ const cloudinary = require('cloudinary').v2
 const taskModel = require('../models/taskModel')
 const departmentModel = require('../models/DepartmentModel')
 const mongoose = require('mongoose')
-const cron = require('node-cron');
-const nodemailer = require('nodemailer');
+
 
 // api for register admin:
 module.exports.registerAdmin = async(req,res)=>{
