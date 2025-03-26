@@ -81,7 +81,7 @@ const CreateEmployee = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Something Went Wrong!");
       console.log(error.message);
     }
   };
@@ -89,7 +89,7 @@ const CreateEmployee = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[10rem] md:ml-[19.6rem]">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
         <div className="p-4 flex flex-col gap-8 relative">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">

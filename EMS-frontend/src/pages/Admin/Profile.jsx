@@ -47,15 +47,15 @@ const Profile = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.message);
+      console.log(error.message);
+      toast.error("Something Went Wrong!");
     }
   };
 
   return (
     <div className="w-full flex ">
       <Sidebar />
-      <div className="w-full  sm:ml-[10rem] md:ml-[19.6rem]">
+      <div className="w-full  sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
 
         <div
@@ -245,14 +245,14 @@ const Profile = () => {
             <div className="mt-10">
               {isEdit ? (
                 <button
-                  className="border border-primary px-8 py-2 rounded-full bg-green-500 hover:bg-emerald-800 hover:text-white transition-all"
+                  className="border border-primary px-8 py-2 rounded-full bg-green-600 hover:bg-emerald-800 hover:text-white transition-all"
                   onClick={() => updateAdminProfileData()}
                 >
                   Save Information
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-8 py-2 rounded-md bg-green-500 hover:bg-green-800 hover:text-white transition-all"
+                  className="border border-primary px-8 py-2 rounded-md bg-green-600 hover:bg-green-800 hover:text-white transition-all"
                   onClick={() => setIsEdit(true)}
                 >
                   Edit

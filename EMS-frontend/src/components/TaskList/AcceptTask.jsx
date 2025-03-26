@@ -130,7 +130,7 @@ const AcceptTask = ({ data }) => {
   return (
     <div
       className="flex flex-col justify-between flex-shrink-0 w-[300px] p-5  bg-white border border-zinc-300 
-         drop-shadow-md dark:bg-[#1a1a1a] dark:border-[#535353] rounded-xl"
+         drop-shadow-md dark:bg-[#1a1a1a] dark:border-[#535353] rounded-xl cursor-pointer"
     >
       {aToken && (
         <div

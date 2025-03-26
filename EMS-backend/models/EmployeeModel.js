@@ -19,7 +19,7 @@ const employeeSchema = new mongoose.Schema({
     position:{type:String, default:"Not Selected"},
     department:{type: String,  required: true},
     address:{type:String},
-    salary:{type:Number, requried:true},
+    salary:{type:Number, required:true},
     joiningDate:{type:String, requried:true},
     leaves: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Leave' }],
     workingType:{type:String,enum: ['Onsite', 'Remote', 'Hybrid'], default: 'Onsite' },

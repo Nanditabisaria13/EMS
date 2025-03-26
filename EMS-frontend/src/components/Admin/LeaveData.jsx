@@ -61,54 +61,58 @@ const LeaveData = () => {
     <div
       id="leaveStatus"
       className="bg-white drop-shadow-md p-5 mt-5 rounded-xl relative border dark:bg-[#1a1a1a]
-    dark:border-[#535353] max-w-full "
+    dark:border-[#535353] max-w-full"
     >
       <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
         Leave Requests
       </h1>
 
-      <div className="overflow-x-auto">
-        <div className="mt-5 mb-2 py-2 px-4 flex items-center justify-between gap-6 lg:gap-1 rounded w-fit md:w-full bg-emerald-500">
-          <h2 className="text-lg font-base w-32 lg:w-1/5">Employee</h2>
-          <h3 className="text-lg font-base w-32 lg:w-1/5">Leave Type</h3>
-          <h5 className="text-lg font-base w-32 lg:w-1/5">Duration</h5>
-          <h5 className="text-lg font-base w-32 lg:w-1/5">Requested On</h5>
-          <h5 className="text-lg font-base w-32 lg:w-1/5">Status</h5>
-          <h5 className="text-lg font-base w-32 lg:w-1/5">Action</h5>
+      <div className="overflow-x-auto ">
+        <div className="mt-5 mb-2 py-2 px-4 flex items-center justify-between gap-6 lg:gap-1 rounded w-fit xl:w-full bg-emerald-500">
+          <h2 className="text-lg font-base w-32">Employee</h2>
+          <h3 className="text-lg font-base w-32">Leave Type</h3>
+          <h5 className="text-lg font-base w-32">Duration</h5>
+          <h5 className="text-lg font-base w-32">Reason</h5>
+          <h5 className="text-lg font-base w-32">Requested On</h5>
+          <h5 className="text-lg font-base w-32">Status</h5>
+          <h5 className="text-lg font-base w-32">Action</h5>
         </div>
 
-        <div className="overflow-y-auto w-fit md:w-full max-h-[50vh] lg:max-h-[40vh]">
+        <div className="overflow-y-auto w-fit xl:w-full max-h-[50vh] lg:max-h-[40vh]">
           {leaveData.map((item, index) => (
             <div
               key={index}
               className="border border-emerald-600 mb-2 py-2 px-4 flex gap-6 lg:gap-1 items-center justify-between rounded"
             >
-              <div className="w-32 lg:w-1/5 flex gap-2 items-center">
+              <div className="w-32 flex gap-2 items-center">
                 <img
                   src={item.employeeId.image}
-                  className="w-12 h-12  rounded-full"
+                  className="w-12 h-12 rounded-full"
                   alt=""
                 />
 
-                <h2 className="text-lg fotn-medium w-28 lg:w-1/5">
+                <h2 className="text-lg fotn-medium w-32">
                   {item.employeeId.fullName.firstName}{" "}
                   {item.employeeId.fullName.lastName}
                 </h2>
               </div>
 
-              <h5 className="text-lg font-normal w-32 lg:w-1/5 text-yellow-400">
+              <h5 className="text-lg font-normal w-32 text-neutral-800 dark:text-white">
                 {item.leaveType}
               </h5>
-              <h3 className="text-lg font-normal w-32 lg:w-1/5 text-blue-400">
-                {item.duration} Days
+              <h3 className="text-lg font-normal w-32 text-blue-400">
+                {item.duration} {item.durationType}
               </h3>
-              <h3 className="text-lg font-normal w-32 lg:w-1/5 text-blue-400">
+              <h3 className="text-lg font-normal w-32 text-yellow-400">
+                {item.reason} 
+              </h3>
+              <h3 className="text-lg font-normal w-32 text-blue-400">
                 {item.startDate}
               </h3>
-              <h5 className="  text-lg font-normal w-32 lg:w-1/5 text-neutral-800 dark:dark:text-white">
+              <h5 className="text-lg font-normal w-32 text-neutral-800 dark:dark:text-white">
                 {item.status}
               </h5>
-              <div className="flex gap-2 w-32 lg:w-1/5">
+              <div className="flex gap-2 w-32">
                 <i
                   className="ri-checkbox-circle-fill text-green-600 hover:text-green-400 text-3xl font-semibold"
                   onClick={() => approvedRequest(item._id)}

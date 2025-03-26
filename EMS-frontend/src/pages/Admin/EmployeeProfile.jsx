@@ -54,14 +54,14 @@ const EmployeeProfile = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error("Something Went Wrong!");
     }
   };
 
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full  sm:ml-[10rem] md:ml-[19.6rem]">
+      <div className="w-full  sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
 
         <div
@@ -376,8 +376,8 @@ const EmployeeProfile = () => {
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-800
-                 hover:text-white transition-all text-xl font-medium"
+                  className="border border-primary px-10 py-2 rounded-lg bg-green-600 hover:bg-green-800
+                 hover:text-white transition-all text-base sm:text-xl font-medium"
                   onClick={() => setIsEdit(true)}
                 >
                   Edit
@@ -385,7 +385,7 @@ const EmployeeProfile = () => {
               )}
               <button
                 className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-800
-               hover:text-white transition-all text-lg font-normal"
+               hover:text-white transition-all text-base sm:text-lg font-normal"
               >
                 Delete Employee
               </button>

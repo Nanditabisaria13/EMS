@@ -40,7 +40,7 @@ const AllEmployees = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[10rem] md:ml-[19.6rem]">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar setFilterVisible={setFilterVisible} />
         <div className="p-4 relative flex flex-col gap-8">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
@@ -113,7 +113,7 @@ const AllEmployees = () => {
                       alt=""
                     />
                     <div className="flex flex-col">
-                      <h1 className="text-3xl md:text-lg lg:text-xl text-emerald-700 font-medium dark:text-emerald-500">
+                      <h1 className="text-xl md:text-lg lg:text-xl text-emerald-700 font-medium dark:text-emerald-500">
                         {employee.fullName.firstName}{" "}
                         {employee.fullName.lastName}
                       </h1>

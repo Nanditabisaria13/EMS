@@ -53,6 +53,7 @@ const EmployeeContextProvider = (props) => {
       );
       if (data.success) {
         setLeaveData(data.leaveData);
+        toast.success(data.message);
       } else {
         toast.error(data.message);
       }

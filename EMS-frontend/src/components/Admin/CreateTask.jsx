@@ -36,7 +36,7 @@ const CreateTask = () => {
       if (data.success) {
         toast.success(data.message);
         getAllEmployees();
-
+        
         setTitle("");
         setDescription("");
         setDate("");
@@ -45,10 +45,10 @@ const CreateTask = () => {
         setCategory("");
         setDeadline("");
       } else {
-        toast.error("request not send");
+        toast.error("Request not send");
       }
     } catch (error) {
-      toast.error("Bad request");
+      toast.error("Something Went Wrong!");
       console.log(error.message);
     }
   };

@@ -38,7 +38,7 @@ const App = () => {
   }, [darkMode]);
 
   return (
-    <div className=" dark:bg-[#101013] dark:text-white min-h-screen">
+    <div className=" dark:bg-[#101013] dark:text-white min-h-screen w-full">
       <ToastContainer
         position="top-right"
         autoClose={5000}

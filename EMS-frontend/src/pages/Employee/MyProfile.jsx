@@ -59,12 +59,12 @@ const MyProfile = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem]">
+      <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden">
         <EmployeeNavbar />
 
         <div
-          className="flex flex-col md:flex-row text-sm items-center justify-center gap-10 md:gap-24 w-full bg-white drop-shadow-md
-               dark:bg-transparent dark:border-[#535353]  p-6 mt-20"
+          className="flex flex-col lg:flex-row text-sm items-center justify-center gap-10 md:gap-24 w-full bg-white drop-shadow-md
+               dark:bg-transparent dark:border-[#535353]  p-6 mt-20 cursor-pointer"
         >
           <div className="flex flex-col gap-2 items-center">
             {isEdit ? (
@@ -339,7 +339,7 @@ const MyProfile = () => {
             <div className="mt-10 flex gap-2">
               {isEdit ? (
                 <button
-                  className="border border-primary px-10 py-2 rounded-full bg-green-500 hover:bg-emerald-800
+                  className="border border-primary px-10 py-2 rounded-full bg-green-600 hover:bg-emerald-800
                  hover:text-white transition-all text-xl font-medium"
                   onClick={() => updateProfile()}
                 >
@@ -347,7 +347,7 @@ const MyProfile = () => {
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-800
+                  className="border border-primary px-10 py-2 rounded-lg bg-green-600 hover:bg-green-800
                  hover:text-white transition-all text-xl font-medium"
                   onClick={() => setIsEdit(true)}
                 >

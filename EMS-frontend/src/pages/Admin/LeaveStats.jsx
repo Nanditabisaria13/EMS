@@ -24,14 +24,14 @@ const LeaveStats = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[10rem] md:ml-[19.6rem]">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
         <div className="px-3 py-3 w-full bg-slate-50 dark:bg-[#101013] dark:text-white">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white mt-2">
             Leave Stats
           </h1>
 
-          <div className="mt-1 flex flex-col gap-3">
+          <div className="mt-1 flex flex-col gap-3 w-full">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-emerald-400 flex justify-between items-start  gap-2 p-4 px-4 rounded-xl">
                 <div className="flex flex-col gap-2">
@@ -81,7 +81,9 @@ const LeaveStats = () => {
                 <i className="ri-calendar-close-fill font-medium text-2xl sm:text-3xl text-neutral-900"></i>
               </div>
             </div>
+      
             <LeaveData />
+           
           </div>
         </div>
       </div>

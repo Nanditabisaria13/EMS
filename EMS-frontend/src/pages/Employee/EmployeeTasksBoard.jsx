@@ -24,7 +24,7 @@ const EmployeeTasksBoard = () => {
   return (
     <div className="max-w-full flex items-start ">
       <Sidebar />
-      <div className=" w-full sm:w-[80%] md:w-[73%] lg:w-[75%] xl:w-[80%] sm:ml-[8.5rem] md:ml-[19.6rem]">
+      <div className=" w-full sm:w-[80%] md:w-[73%] lg:w-[75%] xl:w-[80%] sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden">
         <EmployeeNavbar />
 
         <div className="px-4 py-3 w-full bg-slate-50 dark:bg-[#101013] relative">

@@ -4,7 +4,7 @@ const CompleteTask = ({ data }) => {
   return (
     <div
       className="flex flex-shrink-0 w-[300px] p-5 flex-col justify-between bg-white drop-shadow-md border
-     border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353] rounded-xl"
+     border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer rounded-xl"
     >
       <div className="flex justify-between items-center ">
         <h3 className="bg-yellow-500 text-sm px-3 py-1 rounded">

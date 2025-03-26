@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const leaveSchema = new mongoose.Schema({
@@ -7,6 +6,7 @@ const leaveSchema = new mongoose.Schema({
   leaveType: { type: String, required: true }, 
   reason: { type: String, required: true },
   duration: { type: String, required: true }, 
+  durationType: { type: String, required: true }, 
   startDate: { type: String, required: true },
   endDate: { type: String, required: true },
   status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },

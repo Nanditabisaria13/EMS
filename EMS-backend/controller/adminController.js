@@ -461,6 +461,11 @@ module.exports.adminDashboard = async(req,res)=>{
 // api for search and filter the employee by taskStatus:
 module.exports.filterEmployee = async(req,res)=>{
      try{
+      const adminId = req.adminId
+      if (!adminId) {
+        return res.status(400).json({ success: false, message: "Something Went Wrong!" });
+      }
+
         const { taskStatus } = req.query; 
 
         if (!taskStatus || !['active', 'completed', 'failed'].includes(taskStatus)) {
@@ -468,7 +473,7 @@ module.exports.filterEmployee = async(req,res)=>{
         }
     
 
-        const employees = await employeeModel.find();
+        const employees = await employeeModel.find({ adminId }).select('-password');
         const filteredEmployees = [];
     
         for (const employee of employees) {
@@ -607,9 +612,15 @@ module.exports.deleteDepartment = async (req, res) => {
 // api for serach employees by name:
 module.exports.searchEmployeesByName = async (req, res) => {
     try {
+      const adminId = req.adminId
+      if (!adminId) {
+        return res.status(400).json({ success: false, message: "Something Went Wrong!" });
+      }
+
       const { name } = req.query; 
       const employees = await employeeModel.find({
         'fullName.firstName': { $regex: name, $options: 'i' },
+        adminId: adminId, 
       });
        
       if(!employees){

@@ -41,7 +41,7 @@ const DepartmentDetail = ({ deleteDepartment }) => {
               <div className="flex gap-2 w-32 lg:w-1/5">
                 <i
                   onClick={() => deleteDepartment(department.departmentName)}
-                  class="ri-delete-bin-6-fill text-red-500 text-2xl font-semibold"
+                  className="ri-delete-bin-6-fill text-red-500 text-2xl font-semibold"
                 ></i>
               </div>
             </div>
