@@ -7,6 +7,7 @@ const cloudinary = require('cloudinary').v2
 const taskModel = require('../models/taskModel')
 const departmentModel = require('../models/DepartmentModel')
 const mongoose = require('mongoose')
+const LeaveModel = require('../models/LeaveModel')
 
 
 // api for register admin:
@@ -166,6 +167,26 @@ module.exports.updateProfile = async(req,res)=>{
 
 }
 
+// api to delete profile:
+module.exports.deleteProfile = async(req,res)=>{
+  try {
+    const adminId = req.adminId;
+
+    await employeeModel.deleteMany({ adminId: adminId });
+
+    await departmentModel.deleteMany({ adminId: adminId }); 
+
+    await LeaveModel.deleteMany({ adminId: adminId });
+
+    await adminModel.findByIdAndDelete({_id:adminId});
+
+    res.status(200).json({ success: true, message: 'Delete Your Account Successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to delete account.' });
+  }
+}
+
 // api for get all emoloyee:
 module.exports.getAllEmployee = async(req,res)=>{
        try {
@@ -309,6 +330,21 @@ module.exports.updateEmployeeProfile = async (req,res)=>{
   } catch (error) {
     console.log(error)
     res.json({success:false,message:error.message})
+  }
+}
+
+// api for delete the employee:
+module.exports.deleteEmployee = async(req,res)=>{
+  try {
+    const { employeeId } = req.params;
+
+    if (!employeeId) {
+      return res.status(404).json({ message: 'Something went wrong!' });
+    }
+    await employeeModel.findByIdAndDelete({_id:employeeId});
+    res.status(200).json({success:true, message: 'Employee deleted successfully' });
+  } catch (error) {
+    res.status(500).json({success:false,  message: 'Failed to delete employee' });
   }
 }
 

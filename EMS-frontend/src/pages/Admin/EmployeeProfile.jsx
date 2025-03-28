@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/common/Sidebar";
 import AdminNavbar from "../../components/Admin/AdminNavbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -11,9 +11,10 @@ const EmployeeProfile = () => {
   const { employee, setEmployee, getSpecificEmployee, backendUrl, aToken } =
     useContext(AdminContext);
   const { employeeId } = useParams();
-
+  const navigate = useNavigate()
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); 
 
   useEffect(() => {
     getSpecificEmployee(employeeId); // Fetch the employee details when component mounts
@@ -54,9 +55,29 @@ const EmployeeProfile = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something Went Wrong!");
+      toast.error("Error while uodating the profile!");
     }
   };
+
+  
+  const deleteEmployee = async (employeeId)=>{
+    try {
+      const {data} = await axios.post(backendUrl + `/api/admin/delete-employee/${employeeId}`,
+        {},
+        { headers: { aToken } }
+      )
+      if(data.success){
+        toast.success(data.message)
+         navigate('/all-employees')
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error While Deleting the employee!");
+    }
+  }
+
 
   return (
     <div className="w-full flex">
@@ -219,7 +240,7 @@ const EmployeeProfile = () => {
               className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300 dark:bg-[#1a1a1a]
           dark:border-[#535353]"
             >
-              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+              <p className="text-neutral-900 text-lg mt-3 dark:text-white">
                 BASIC INFORMATION
               </p>
               <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500 ">
@@ -319,7 +340,7 @@ const EmployeeProfile = () => {
               className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300 dark:bg-[#1a1a1a]
              dark:border-[#535353]"
             >
-              <p className="text-neutral-900 dark:text-white text-lg underline mt-3">
+              <p className="text-neutral-900 dark:text-white text-lg  mt-3">
                 CONTACT INFORMATION
               </p>
               <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">
@@ -369,7 +390,7 @@ const EmployeeProfile = () => {
               {isEdit ? (
                 <button
                   className="border border-primary px-10 py-2 rounded-full bg-green-500 hover:bg-emerald-800
-                 hover:text-white transition-all text-xl font-medium"
+                 hover:text-white transition-all text-base sm:text-xl font-normal"
                   onClick={() => updateEmployeeProfileData(employee._id)}
                 >
                   Save Information
@@ -377,13 +398,14 @@ const EmployeeProfile = () => {
               ) : (
                 <button
                   className="border border-primary px-10 py-2 rounded-lg bg-green-600 hover:bg-green-800
-                 hover:text-white transition-all text-base sm:text-xl font-medium"
+                 hover:text-white transition-all text-base sm:text-xl font-normal"
                   onClick={() => setIsEdit(true)}
                 >
                   Edit
                 </button>
               )}
               <button
+                onClick={() => setShowDeleteModal(true)}
                 className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-800
                hover:text-white transition-all text-base sm:text-lg font-normal"
               >
@@ -392,6 +414,28 @@ const EmployeeProfile = () => {
             </div>
           </div>
         </div>
+         {/* Delete Account Modal */}
+         {showDeleteModal && (
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-5 dark:bg-[#1a1a1a] rounded-lg">
+              <p className="text-lg">Are you sure you want to delete this account?</p>
+              <div className="flex gap-3 mt-4">
+                <button
+                  className="bg-red-600 text-white px-5 py-2 rounded-md"
+                  onClick={()=> deleteEmployee(employee._id)} 
+                >
+                  Delete
+                </button>
+                <button
+                  className="bg-gray-300 text-black px-5 py-2 rounded-md"
+                  onClick={() => setShowDeleteModal(false)} 
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

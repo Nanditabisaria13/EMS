@@ -214,7 +214,7 @@ const MyProfile = () => {
               className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
              dark:bg-[#1a1a1a] dark:border-[#535353]"
             >
-              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+              <p className="text-neutral-900 text-lg  mt-3 dark:text-white">
                 BASIC INFORMATION
               </p>
               <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">
@@ -293,7 +293,7 @@ const MyProfile = () => {
               className="flex flex-col bg-white drop-shadow-md rounded-lg p-5 border border-zinc-300
              dark:bg-[#1a1a1a] dark:border-[#535353]"
             >
-              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+              <p className="text-neutral-900 text-lg  mt-3 dark:text-white">
                 CONTACT INFORMATION
               </p>
               <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">

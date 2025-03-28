@@ -10,7 +10,7 @@ const DepartmentDetail = ({ deleteDepartment }) => {
 
   return (
     <div className="bg-white drop-shadow-md p-5 mt-5 rounded-xl relative border max-w-full dark:bg-[#1a1a1a] dark:border-[#535353]">
-      <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
+      <h1 className="font-medium text-2xl text-neutral-800 dark:text-white cursor-pointer">
         Department Details
       </h1>
 

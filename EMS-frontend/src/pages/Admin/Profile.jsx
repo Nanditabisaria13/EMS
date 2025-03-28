@@ -5,13 +5,16 @@ import { AdminContext } from "../../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); 
 
-  const { adminProfile, getAdminProfile, setAdminProfile, aToken, backendUrl } =
+  const { adminProfile, getAdminProfile, setAdminProfile, aToken, setAToken, backendUrl } =
     useContext(AdminContext);
+    const navigate = useNavigate()
 
   useEffect(() => {
     getAdminProfile();
@@ -52,6 +55,26 @@ const Profile = () => {
     }
   };
 
+   const deleteAccount = async ()=>{
+       try {
+         const {data} = await axios.post(backendUrl + '/api/admin/delete-profile',
+           {},
+           { headers: { aToken } }
+         )
+         if(data.success){
+           toast.success(data.message)
+           localStorage.removeItem("aToken");
+           setAToken(null);
+            navigate('/')
+         }else{
+           toast.error(data.message)
+         }
+       } catch (error) {
+         console.log(error);
+         toast.error("Error While Deleting the account");
+       }
+     }
+   
   return (
     <div className="w-full flex ">
       <Sidebar />
@@ -130,10 +153,10 @@ const Profile = () => {
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col bg-white drop-shadow-md  border border-zinc-300 p-5 rounded-md dark:bg-[#1a1a1a]">
-              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+              <p className="text-neutral-900 text-lg mt-3 dark:text-white">
                 BASIC INFORMATION
               </p>
-              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500 ">
+              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500 dark:text-white">
                 <p className="font-medium text-base">Gender:</p>
                 {isEdit ? (
                   <select
@@ -155,7 +178,7 @@ const Profile = () => {
                   </p>
                 )}
 
-                <p className="font-medium text-base">DOB:</p>
+                <p className="font-medium text-base dark:text-white ">DOB:</p>
                 {isEdit ? (
                   <input
                     className="max-w-28 bg-gray-100 dark:bg-transparent placeholder:dark:text-white"
@@ -177,7 +200,7 @@ const Profile = () => {
             </div>
 
             <div className="flex flex-col bg-white drop-shadow-md border border-zinc-300 p-5 rounded-md dark:bg-[#1a1a1a]">
-              <p className="text-neutral-900 text-lg underline mt-3 dark:text-white">
+              <p className="text-neutral-900 text-lg mt-3 dark:text-white">
                 CONTACT INFORMATION
               </p>
               <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500 dark:text-neutral-100">
@@ -242,25 +265,56 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-10 flex gap-2">
               {isEdit ? (
                 <button
-                  className="border border-primary px-8 py-2 rounded-full bg-green-600 hover:bg-emerald-800 hover:text-white transition-all"
+                  className="border border-primary px-8 py-2 rounded-full bg-green-600 hover:bg-emerald-800 hover:text-white transition-all
+                            text-base sm:text-xl "
                   onClick={() => updateAdminProfileData()}
                 >
                   Save Information
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-8 py-2 rounded-md bg-green-600 hover:bg-green-800 hover:text-white transition-all"
+                  className="border border-primary px-8 py-2 rounded-md bg-green-600 hover:bg-green-800 hover:text-white transition-all
+                            text-base sm:text-xl "
                   onClick={() => setIsEdit(true)}
                 >
                   Edit
                 </button>
               )}
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-800
+               hover:text-white transition-all text-base sm:text-xl font-normal"
+              >
+                Delete Account
+              </button>
             </div>
           </div>
         </div>
+         {/* Delete Account Modal */}
+         {showDeleteModal && (
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-5 dark:bg-[#1a1a1a] rounded-lg">
+              <p className="text-lg">Are you sure you want to delete your account? </p>
+              <div className="flex items-center justify-center gap-6 mt-4">
+                <button
+                  className="bg-red-600 text-white px-5 py-2 rounded-md"
+                  onClick={()=>deleteAccount()} 
+                >
+                  Delete
+                </button>
+                <button
+                  className="bg-gray-300 text-black px-5 py-2 rounded-md"
+                  onClick={() => setShowDeleteModal(false)} 
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

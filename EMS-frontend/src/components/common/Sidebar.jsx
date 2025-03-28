@@ -24,7 +24,7 @@ const Sidebar = () => {
   return (
     <div
       className={`fixed top-0 left-0 min-h-screen py-6 px-10 sm:px-3 border-r border-zinc-300 bg-white drop-shadow-md  sm:flex flex-col gap-3 
-       dark:bg-[#1a1a1a]  dark:border-[#535353] z-50 ${
+       dark:bg-[#1a1a1a]  dark:border-[#535353]  cursor-pointer z-50 ${
          isSidebarOpen ? "block" : "hidden"
        } transition-all duration-300`}
     >

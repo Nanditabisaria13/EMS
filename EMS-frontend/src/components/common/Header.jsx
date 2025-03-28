@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="flex flex-col md:flex-row flex-wrap rounded-lg px-5 py-3 w-full h-full items-center justify-end">
       {/* Left Side */}
-      <div className="md:w-1/2 flex flex-col gap-4 items-start justify-center m-auto py-10 md:pt-[10vw] ">
+      <div className="md:w-1/2 flex flex-col gap-4 items-start justify-center m-auto py-10 md:pt-[10vw] cursor-pointer">
         <h2
           className="text-emerald-900 font-semibold text-4xl sm:text-6xl text-center md:text-4xl lg:text-6xl md:text-left leading-tight
                            dark:text-emerald-400"
@@ -22,7 +22,7 @@ const Header = () => {
       </div>
 
       {/* Right Side */}
-      <div className="md:w-2/5 relative m-auto">
+      <div className="md:w-2/5 relative m-auto cursor-pointer">
         <img src={assets.emsImg} alt="" />
       </div>
     </div>

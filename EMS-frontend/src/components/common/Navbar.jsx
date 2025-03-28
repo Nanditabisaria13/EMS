@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <div
       className="sticky top-0 left-0 w-full flex items-start justify-between z-50 p-5 bg-white drop-shadow-md border-b
-                    border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353] "
+                    border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353]  cursor-pointer"
     >
       <div className="logo">
         <h1

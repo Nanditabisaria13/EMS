@@ -15,7 +15,7 @@ const EmployeeNavbar = () => {
   return (
     <div
       className="sticky top-0 py-4 px-4 w-full flex items-center justify-between gap-3 sm:px-10 border-b z-40 bg-white drop-shadow-md
-     dark:bg-[#1a1a1a] dark:border-[#535353]"
+     dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer"
     >
       <div>
         {" "}

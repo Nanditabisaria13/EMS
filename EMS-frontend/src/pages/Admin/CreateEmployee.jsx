@@ -240,7 +240,7 @@ const CreateEmployee = () => {
                   Phone No.
                 </h3>
                 <input
-                  type="number"
+                  type="text"
                   value={phone}
                   placeholder="Enter Phone No."
                   onChange={(e) => setPhone(e.target.value)}
@@ -250,6 +250,19 @@ const CreateEmployee = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row items-start justify-between gap-4 w-full">
+            <div className="flex flex-col gap-2 w-full lg:w-1/2">
+                <h3 className="text-lg text-zinc-800 font-medium dark:text-white ">
+                  Department
+                </h3>
+                <input
+                  type="text"
+                  value={department}
+                  placeholder="Enter department"
+                  onChange={(e) => setDepartment(e.target.value)}
+                  className="bg-zinc-100 border border-zinc-300 text-lg placeholder:text-base rounded-sm w-full px-4 py-2 dark:bg-transparent"
+                />
+              </div>
+
               <div className="flex flex-col gap-2 w-full lg:w-1/2">
                 <h3 className="text-lg text-zinc-800 font-medium dark:text-white ">
                   Position
@@ -263,18 +276,6 @@ const CreateEmployee = () => {
                 />
               </div>
 
-              <div className="flex flex-col gap-2 w-full lg:w-1/2">
-                <h3 className="text-lg text-zinc-800 font-medium dark:text-white ">
-                  Salary
-                </h3>
-                <input
-                  type="text"
-                  value={salary}
-                  placeholder="Enter Salary"
-                  onChange={(e) => setSalary(e.target.value)}
-                  className="bg-zinc-100  border border-zinc-300 text-lg placeholder:text-base rounded-sm w-full px-4 py-2 dark:bg-transparent"
-                />
-              </div>
             </div>
 
             <div className="flex flex-col lg:flex-row items-start justify-between gap-4 w-full">
@@ -293,14 +294,14 @@ const CreateEmployee = () => {
 
               <div className="flex flex-col gap-2 w-full lg:w-1/2">
                 <h3 className="text-lg text-zinc-800 font-medium dark:text-white ">
-                  Department
+                  Salary
                 </h3>
                 <input
                   type="text"
-                  value={department}
-                  placeholder="Enter department"
-                  onChange={(e) => setDepartment(e.target.value)}
-                  className="bg-zinc-100 border border-zinc-300 text-lg placeholder:text-base rounded-sm w-full px-4 py-2 dark:bg-transparent"
+                  value={salary}
+                  placeholder="Enter Salary"
+                  onChange={(e) => setSalary(e.target.value)}
+                  className="bg-zinc-100  border border-zinc-300 text-lg placeholder:text-base rounded-sm w-full px-4 py-2 dark:bg-transparent"
                 />
               </div>
             </div>

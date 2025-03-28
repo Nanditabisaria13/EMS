@@ -8,7 +8,7 @@ const EmployeeDetails = ({ adminData }) => {
   return (
     <div
       className="bg-white drop-shadow-md p-5 mt-5 rounded-xl relative  max-w-full border border-zinc-300 dark:bg-[#1a1a1a]
-                 dark:border-[#535353] "
+                 dark:border-[#535353]  cursor-pointer"
     >
       <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
         Employee Details

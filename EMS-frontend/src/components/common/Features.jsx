@@ -5,7 +5,7 @@ const Features = () => {
   return (
     <div className="flex flex-col gap-8 px-5 py-3">
       <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-5 md:gap-3 ">
-        <div className="md:w-1/2 flex flex-col gap-4 items-start justify-center p-5">
+        <div className="md:w-1/2 flex flex-col gap-4 items-start justify-center p-5 cursor-pointer">
           <h1 className="font-semibold text-3xl md:text-5xl lg:text-6xl text-emerald-900 dark:text-emerald-400">
             Monitor Employee Productivity
           </h1>
@@ -27,7 +27,7 @@ const Features = () => {
         </div>
       </div>
 
-      <div className="flex flex-col-reverse md:flex-row flex-wrap items-center gap-5 justify-between md:gap-3 md:px-4">
+      <div className="flex flex-col-reverse md:flex-row flex-wrap items-center gap-5 justify-between md:gap-3 md:px-4  cursor-pointer">
         <div className="md:w-2/5">
           <img src={assets.EmsFeatureImg2} alt="" className="w-full" />
         </div>
@@ -45,7 +45,7 @@ const Features = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-5 md:gap-3 md:px-4">
+      <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-5 md:gap-3 md:px-4  cursor-pointer">
         <div className="md:w-1/2 flex flex-col gap-4 items-start justify-center p-5">
           <h1 className="font-semibold text-3xl md:text-5xl lg:text-6xl text-emerald-900 dark:text-emerald-400">
             Secure Password Management

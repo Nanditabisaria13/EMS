@@ -61,7 +61,7 @@ const LeaveData = () => {
     <div
       id="leaveStatus"
       className="bg-white drop-shadow-md p-5 mt-5 rounded-xl relative border dark:bg-[#1a1a1a]
-    dark:border-[#535353] max-w-full"
+    dark:border-[#535353] max-w-full cursor-pointer"
     >
       <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
         Leave Requests

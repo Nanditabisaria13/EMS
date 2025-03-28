@@ -6,7 +6,7 @@ const Quality = () => {
     <div className="w-full p-5 mt-16 xl:mt-20 py-20 flex flex-col md:flex-row items-center justify-center gap-6 ">
       <div
         className="w-9/12 lg:w-[30%] flex flex-col items-center justify-center gap-4 rounded-xl p-7 bg-white drop-shadow-md
-        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353]"
+        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353]  cursor-pointer"
       >
         <img src={assets.qualityIcon1} className="w-16" alt="" />
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">
@@ -20,7 +20,7 @@ const Quality = () => {
 
       <div
         className="w-9/12 lg:w-[30%]  flex flex-col items-center justify-center gap-4 rounded-xl p-7 bg-white drop-shadow-md
-        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353]"
+        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer"
       >
         <img src={assets.qualityIcon2} className="w-16" alt="" />
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">
@@ -34,7 +34,7 @@ const Quality = () => {
 
       <div
         className="w-9/12 lg:w-[30%] flex flex-col items-center justify-center gap-4 rounded-xl p-7 bg-white drop-shadow-md
-        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353]"
+        hover:scale-105 transition-all duration-500 border border-zinc-300 dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer"
       >
         <img src={assets.qualityIcon3} className="w-16" alt="" />
         <h1 className="text-emerald-900 font-semibold text-2xl dark:text-emerald-400">

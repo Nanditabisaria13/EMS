@@ -40,7 +40,7 @@ const AdminNavbar = () => {
     <div className="sticky top-0 left-0 z-40">
       <div
         className="py-4 md:px-2 lg:px-4 w-full flex items-center justify-between sm:px-10 border-b  bg-white drop-shadow-md
-                     dark:bg-[#1a1a1A] dark:border-[#535353]"
+                     dark:bg-[#1a1a1A] dark:border-[#535353] cursor-pointer"
       >
         <div className="flex items-start justify-between gap-2">
           <div>
@@ -70,7 +70,7 @@ const AdminNavbar = () => {
 
         <div className="flex items-center justify-between gap-3">
           <DarkModeToggler />
-          <i className="ri-notification-3-fill font-semibold text-xl dark:text-white"></i>
+          <i className="ri-notification-3-fill font-semibold text-xl dark:text-gray-200"></i>
           <div className="flex gap-2 p-2">
             <div className="w-12 h-12 rounded-full border-[3px] border-green-600">
               <img

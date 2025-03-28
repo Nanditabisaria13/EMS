@@ -18,7 +18,7 @@ const adminSchema = new mongoose.Schema({
     address:{type:String},
     employees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'employee' }],
     departments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'department' }],
-    
+    leaves: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Leave' }],
 })
 
 const adminModel = mongoose.models.admin || mongoose.model('admin',adminSchema)
