@@ -390,6 +390,76 @@ module.exports.addNewTask = async(req,res)=>{
     }
 }
 
+// mark task as completed:
+module.exports.taskCompleted = async(req,res)=>{
+  try {
+    const adminId = req.adminId
+    if(!adminId){
+      return res.status(400).json({success:false, message:"Something went wrong!"}) 
+    }
+    const {employeeId, taskId} = req.body
+    const employee = await employeeModel.findOneAndUpdate(
+      {_id:employeeId, "tasks.taskId":parseInt(taskId)},
+      {
+        $set:{
+            "tasks.$.completed":true,
+            "tasks.$.active":false,
+          
+        }
+      },
+      {new:true}
+    )  
+    if(!employee){
+      return res.status(400).json({success:false, message:"Something went wrong!"})
+    }
+
+    employee.taskNumbers.completed += 1
+    employee.taskNumbers.active -= 1
+     
+    const updatedEmployee = await employee.save()
+    return res.status(200).json({success:true,message:'Task Completed',updatedEmployee}) 
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({success:false, message:error.message})
+  }
+}
+
+// api for marks the task as delete:
+module.exports.taskFailed = async(req,res)=>{
+   try {
+    const adminId = req.adminId
+    if(!adminId){
+      return res.status(400).json({success:false, message:"Something went wrong!"}) 
+    }
+     const {employeeId,taskId} = req.body
+    const employee = await employeeModel.findOneAndUpdate(
+      {_id:employeeId, "tasks.taskId":parseInt(taskId)},
+      {
+        $set:{
+            "tasks.$.failed":true,
+            "tasks.$.active":false,
+          
+        }
+      },
+      {new:true}
+    )  
+    if(!employee){
+      return res.status(400).json({success:false, message:"Something went wrong!"})
+    }
+
+    employee.taskNumbers.failed += 1
+    employee.taskNumbers.active -= 1
+     
+    const updatedEmployee = await employee.save()
+    return res.status(200).json({success:true,message:'Task Failed',updatedEmployee}) 
+      
+   } catch (error) {
+    console.log(error)
+    return res.status(500).json({success:false, message:error.message})
+   }
+}
+
 // api for update the task:
  module.exports.updateTask = async(req,res)=>{
     try {

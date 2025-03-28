@@ -55,7 +55,7 @@ const CreateTask = () => {
 
   return (
     <div className="p-5 bg-white drop-shadow-md dark:bg-[#1a1a1a] border relative  dark:border-[#535353] rounded max-w-full">
-      <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
+      <h1 className="font-medium text-2xl text-neutral-800 dark:text-white cursor-pointer">
         Create a New Task
       </h1>
       <form

@@ -17,40 +17,83 @@ const AcceptTask = ({ data }) => {
   const { backendUrl, aToken, getSpecificEmployee, setEmployee } =
     useContext(AdminContext);
   const { token, setProfile } = useContext(EmployeeContext);
-
+   
+  const taskdata = { taskId: data.taskId,employeeId };
+  
   const taskCompleted = async () => {
-    try {
-      const { data } = await axios.post(
-        backendUrl + "/api/employee/task-completed",
-        taskdata,
-        { headers: { token } }
-      );
-      if (data.success) {
-        setProfile(data.updatedEmployee);
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
+    if(token){
+      try {
+        const { data } = await axios.post(
+          backendUrl + "/api/employee/task-completed",
+          taskdata,
+          { headers: { token } }
+        );
+        if (data.success) {
+          setProfile(data.updatedEmployee);
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
       }
-    } catch (error) {
-      toast.error(error.message);
     }
+
+    if(aToken){
+      try {
+        const { data } = await axios.post(
+          backendUrl + "/api/admin/completed-task",
+          taskdata,
+          { headers: { aToken } }
+        );
+        if (data.success) {
+          toast.success(data.message);
+          getSpecificEmployee(employeeId)
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+   
   };
 
   const taskFailed = async () => {
-    try {
-      const { data } = await axios.post(
-        backendUrl + "/api/employee/task-failed",
-        taskdata,
-        { headers: { token } }
-      );
-      if (data.success) {
-        setProfile(data.updateEmployee);
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
+    if(token){
+      try {
+        const { data } = await axios.post(
+          backendUrl + "/api/employee/task-failed",
+          taskdata,
+          { headers: { token } }
+        );
+        if (data.success) {
+          setProfile(data.updateEmployee);
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
       }
-    } catch (error) {
-      toast.error(error.message);
+    }
+
+    if(aToken){
+      try {
+        const { data } = await axios.post(
+          backendUrl + "/api/admin/failed-task",
+          taskdata,
+          { headers: { aToken } }
+        );
+        if (data.success) {
+          toast.success(data.message);
+          getSpecificEmployee(employeeId)
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
