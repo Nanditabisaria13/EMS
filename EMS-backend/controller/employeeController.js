@@ -102,7 +102,7 @@ module.exports.updateProfile = async(req,res)=>{
       return res.status(400).json({errors:errors.array()})
     }
 
-    const{employeeId,firstName, lastName, phone, address, dob , gender,email,position,department,salary } = req.body
+    const{employeeId,firstName, lastName, phone, address, dob , gender } = req.body
     const imageFile = req.file
   
     const employee = await employeeModel.findById(employeeId);
@@ -115,14 +115,10 @@ module.exports.updateProfile = async(req,res)=>{
     const updatedEmployeeData = {
       'fullName.firstName': firstName,
       'fullName.lastName': lastName,
-      email: email,
-      dob: dob,
+       dob: dob,
       gender: gender,
       address: address,
       phone: phone,
-      position: position,
-      department: department,
-      salary: salary,
     }; 
 
     const updatedEmployee = await employeeModel.findByIdAndUpdate(

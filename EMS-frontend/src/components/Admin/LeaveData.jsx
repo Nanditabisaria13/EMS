@@ -86,31 +86,31 @@ const LeaveData = () => {
             >
               <div className="w-32 flex gap-2 items-center">
                 <img
-                  src={item.employeeId.image}
+                  src={item.employeeId?.image}
                   className="w-12 h-12 rounded-full"
                   alt=""
                 />
 
                 <h2 className="text-lg fotn-medium w-32">
-                  {item.employeeId.fullName.firstName}{" "}
-                  {item.employeeId.fullName.lastName}
+                  {item.employeeId?.fullName?.firstName}{" "}
+                  {item.employeeId?.fullName?.lastName}
                 </h2>
               </div>
 
               <h5 className="text-lg font-normal w-32 text-neutral-800 dark:text-white">
-                {item.leaveType}
+                {item?.leaveType}
               </h5>
               <h3 className="text-lg font-normal w-32 text-blue-400">
-                {item.duration} {item.durationType}
+                {item?.duration} {item?.durationType}
               </h3>
               <h3 className="text-lg font-normal w-32 text-yellow-400">
-                {item.reason} 
+                {item?.reason} 
               </h3>
               <h3 className="text-lg font-normal w-32 text-blue-400">
-                {item.startDate}
+                {item?.startDate}
               </h3>
               <h5 className="text-lg font-normal w-32 text-neutral-800 dark:dark:text-white">
-                {item.status}
+                {item?.status}
               </h5>
               <div className="flex gap-2 w-32">
                 <i

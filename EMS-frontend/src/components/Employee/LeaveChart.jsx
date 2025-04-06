@@ -22,8 +22,8 @@ const LeaveChart = ({ leavedata }) => {
   ];
 
   return (
-    <div className="w-full p-5 md:w-[48%] bg-white drop-shadow-md border rounded-xl dark:bg-[#1a1a1a] dark:border-[#535353] text-xs sm:text-base">
-      <ResponsiveContainer height={300}>
+    <div className="w-full p-5 lg:w-[48%] bg-white drop-shadow-md border rounded-xl dark:bg-[#1a1a1a] dark:border-[#535353] text-xs sm:text-base">
+      <ResponsiveContainer height={260} width="100%">
         <AreaChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />

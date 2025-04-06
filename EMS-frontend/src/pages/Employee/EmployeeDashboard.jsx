@@ -43,7 +43,7 @@ const EmployeeDashboard = () => {
       <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden cursor-pointer">
         <EmployeeNavbar />
 
-        <div className="px-4 py-3 w-full bg-slate-50 dark:bg-[#101013]">
+        <div className="px-4 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013]">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
             Dashboard
           </h1>
@@ -150,7 +150,7 @@ const EmployeeDashboard = () => {
             </div>
           </div>
 
-          <div className="mt-7 pt-4 flex flex-col md:flex-row justify-between gap-8">
+          <div className="mt-7 pt-4 flex flex-col lg:flex-row justify-between gap-8">
             <PerformanceChart tasksData={tasksData} leavedata={leavedata} />
             <LeaveChart leavedata={leavedata} />
           </div>

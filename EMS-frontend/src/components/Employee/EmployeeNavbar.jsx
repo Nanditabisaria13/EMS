@@ -14,8 +14,8 @@ const EmployeeNavbar = () => {
 
   return (
     <div
-      className="sticky top-0 py-4 px-4 w-full flex items-center justify-between gap-3 sm:px-10 border-b z-40 bg-white drop-shadow-md
-     dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer"
+      className="fixed top-0 py-4 px-4 w-full flex items-center justify-between gap-3 sm:px-10 border-b z-40 bg-white drop-shadow-md
+     dark:bg-[#1a1a1a] dark:border-[#535353] cursor-pointer sm:left-[8rem] md:left-[19.6rem]  sm:w-[calc(100%-8rem)] md:w-[calc(100%-19.6rem)]"
     >
       <div>
         {" "}
@@ -30,7 +30,7 @@ const EmployeeNavbar = () => {
       <div className="flex justify-end items-center gap-2">
         <div className="flex items-center justify-between gap-3">
           <DarkModeToggler />
-          <i className="ri-notification-3-fill font-semibold text-xl dark:text-gray-200"></i>
+          <i className="ri-notification-3-fill font-semibold text-xl text-emerald-800 dark:text-emerald-500"></i>
           <div className="flex gap-2 p-2">
             <div className="w-12 h-12 rounded-full border-[3px] border-green-600">
               <img

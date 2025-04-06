@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import { EmployeeContext } from "../../context/EmployeeContext";
 
@@ -8,6 +8,7 @@ const Sidebar = () => {
     useContext(AdminContext);
   const { token, setToken } = useContext(EmployeeContext);
   const navigate = useNavigate();
+  const location = useLocation(); 
 
   const logout = () => {
     localStorage.removeItem("aToken");
@@ -20,6 +21,23 @@ const Sidebar = () => {
     setToken(null);
     navigate("/");
   };
+   
+    // Function to check if current path is related to "Employees"
+    const isEmployeePageActive = () => {
+      return (
+        location.pathname === "/all-employees" ||
+        location.pathname === "/add-employee" ||
+        location.pathname.startsWith("/employee") 
+      );
+    };
+  
+    // Function to check if current path is related to "Task Board"
+    const isTaskBoardPageActive = () => {
+      return (
+        location.pathname === "/task-board" ||
+        location.pathname.startsWith("/get-employee-tasks") 
+      );
+    };
 
   return (
     <div
@@ -63,7 +81,7 @@ const Sidebar = () => {
               isActive,
             }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
                  ${
-                   isActive
+                  isEmployeePageActive() ||  isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
                      : ""
                  }`}
@@ -80,7 +98,7 @@ const Sidebar = () => {
               isActive,
             }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
                  ${
-                   isActive
+                  isTaskBoardPageActive() ||  isActive
                      ? "bg-emerald-500  rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
                      : ""
                  }`}
@@ -94,10 +112,10 @@ const Sidebar = () => {
           <NavLink
             to="/departments"
             className={({
-              isActive,
+               isActive,
             }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
                  ${
-                   isActive
+                  isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
                      : ""
                  }`}
@@ -189,7 +207,7 @@ const Sidebar = () => {
               isActive,
             }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
                  ${
-                   isActive
+                  isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
                      : ""
                  }`}

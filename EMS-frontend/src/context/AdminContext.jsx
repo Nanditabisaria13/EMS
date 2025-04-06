@@ -59,6 +59,7 @@ const AdminContextProvider = (props) => {
       );
       if (data.success) {
         setAllEmployees(data.employees);
+        console.log("Updated employees:", data.employees);
       } else {
         toast.error(data.message);
       }
@@ -163,15 +164,15 @@ const AdminContextProvider = (props) => {
         setSearchResults(data.searchEmployees);
         navigate("/all-employees");
       } else {
-        toast.error("Something went wrong!");
+        toast.error("No employees found!");
         setSearchResults([]);
       }
     } catch (error) {
-      toast.error("No Employees found!");
       console.error("Error searching employees:", error);
     }
   };
-
+  
+  
   const value = {
     aToken,
     setAToken,
@@ -185,6 +186,7 @@ const AdminContextProvider = (props) => {
     adminProfile,
     setAdminProfile,
     allEmployees,
+    setAllEmployees,
     getAllEmployees,
     employee,
     setEmployee,

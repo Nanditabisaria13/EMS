@@ -240,12 +240,17 @@ module.exports.createEmployee = async(req,res)=>{
         // hashing password:
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt)
+      
+        
+    let imageUrl = 'https://cdn-icons-png.freepik.com/256/10987/10987751.png?ga=GA1.1.1367734566.1715677570&semt=ais_hybrid'; // Default image
 
         // upload image to cloudinary:
 
-        const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"})
-        const imageUrl = imageUpload.secure_url
-      
+         if(imageFile){
+          const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"})
+           imageUrl = imageUpload.secure_url 
+         }
+        
 
         const employeeData = {
             fullName,
@@ -261,7 +266,7 @@ module.exports.createEmployee = async(req,res)=>{
             joiningDate,
             workingType,
             adminId,
-            image:imageUrl
+            image:imageUrl 
         }
        
       
@@ -272,13 +277,14 @@ module.exports.createEmployee = async(req,res)=>{
           $push: { employees: newEmployee._id },
         });
       
-         return res.status(200).json({success:true, message:'Employee Added'})
+         return res.status(200).json({success:true, message:'Employee Added Successfully'})
 
     } catch (error) {
         console.log(error)
         return res.status(500).json({success:false, message:error.message})
     }
 }
+
 
 // api to update user profile:
 module.exports.updateEmployeeProfile = async (req,res)=>{
@@ -336,11 +342,19 @@ module.exports.updateEmployeeProfile = async (req,res)=>{
 // api for delete the employee:
 module.exports.deleteEmployee = async(req,res)=>{
   try {
+    const adminId = req.adminId
     const { employeeId } = req.params;
 
     if (!employeeId) {
       return res.status(404).json({ message: 'Something went wrong!' });
     }
+
+    await adminModel.findByIdAndUpdate(adminId, {
+      $pull: { employees: employeeId }, 
+    });
+
+  
+    await LeaveModel.deleteMany({ employeeId});
     await employeeModel.findByIdAndDelete({_id:employeeId});
     res.status(200).json({success:true, message: 'Employee deleted successfully' });
   } catch (error) {
@@ -574,13 +588,28 @@ module.exports.filterEmployee = async(req,res)=>{
 
         const { taskStatus } = req.query; 
 
-        if (!taskStatus || !['active', 'completed', 'failed'].includes(taskStatus)) {
+        if (!taskStatus || !['all','active', 'completed', 'failed'].includes(taskStatus)) {
           return res.status(400).json({ message: 'Invalid task status. Must be one of: active, completed, failed' });
         }
     
 
         const employees = await employeeModel.find({ adminId }).select('-password');
         const filteredEmployees = [];
+
+        if (taskStatus === 'all') {
+        
+          for (const employee of employees) {
+            filteredEmployees.push({
+              _id: employee._id,
+              fullName: employee.fullName,
+              position: employee.position,
+              image: employee.image,
+              taskCount: employee.tasks.length, 
+              tasks: employee.tasks
+            });
+          }
+          return res.status(200).json({ success:true, message: 'All Employees',  filteredEmployees, });
+        } 
     
         for (const employee of employees) {
           const matchingTasks = employee.tasks.filter(task => task[taskStatus] === true);

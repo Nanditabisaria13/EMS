@@ -41,12 +41,13 @@ const DepartmentChart = () => {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={80}
-            innerRadius={50}
+            outerRadius={85}
+            innerRadius={60}
             paddingAngle={5}
             label={({ name, percent }) =>
               `${name}: ${(percent * 100).toFixed(0)}%`
             }
+           
           >
             {chartData.map((entry, index) => (
               <Cell

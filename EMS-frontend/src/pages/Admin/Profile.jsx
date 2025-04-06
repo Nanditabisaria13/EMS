@@ -43,6 +43,7 @@ const Profile = () => {
       );
       if (data.success) {
         setAdminProfile(data.updatedAdmin);
+        getAdminProfile()
         toast.success(data.message);
         setIsEdit(false);
         setImage(null);
@@ -78,12 +79,12 @@ const Profile = () => {
   return (
     <div className="w-full flex ">
       <Sidebar />
-      <div className="w-full  sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
 
         <div
           className=" flex flex-col lg:flex-row text-sm items-center justify-center gap-10 md:gap-24 bg-white drop-shadow-md
-        px-3 py-3 mt-20  dark:bg-transparent"
+        px-3 py-3 pt-28 mt-16  dark:bg-transparent"
         >
           <div className="flex flex-col gap-2 items-center">
             {isEdit ? (
@@ -156,8 +157,8 @@ const Profile = () => {
               <p className="text-neutral-900 text-lg mt-3 dark:text-white">
                 BASIC INFORMATION
               </p>
-              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500 dark:text-white">
-                <p className="font-medium text-base">Gender:</p>
+              <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-500">
+                <p className="font-medium text-base dark:text-white ">Gender:</p>
                 {isEdit ? (
                   <select
                     className="max-w-20 bg-gray-100"
@@ -268,7 +269,7 @@ const Profile = () => {
             <div className="mt-10 flex gap-2">
               {isEdit ? (
                 <button
-                  className="border border-primary px-8 py-2 rounded-full bg-green-600 hover:bg-emerald-800 hover:text-white transition-all
+                  className="border border-primary px-8 py-2 rounded-lg bg-green-500 hover:bg-green-600 hover:text-white transition-all
                             text-base sm:text-xl "
                   onClick={() => updateAdminProfileData()}
                 >
@@ -276,7 +277,7 @@ const Profile = () => {
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-8 py-2 rounded-md bg-green-600 hover:bg-green-800 hover:text-white transition-all
+                  className="border border-primary px-8 py-2 rounded-md bg-green-500 hover:bg-green-600 hover:text-white transition-all
                             text-base sm:text-xl "
                   onClick={() => setIsEdit(true)}
                 >
@@ -285,7 +286,7 @@ const Profile = () => {
               )}
               <button
                 onClick={() => setShowDeleteModal(true)}
-                className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-800
+                className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-700
                hover:text-white transition-all text-base sm:text-xl font-normal"
               >
                 Delete Account

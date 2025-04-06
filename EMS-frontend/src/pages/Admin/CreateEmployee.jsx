@@ -30,10 +30,6 @@ const CreateEmployee = () => {
     e.preventDefault();
 
     try {
-      if (!Img) {
-        return toast.error("Image is not selected");
-      }
-
       const formData = new FormData();
 
       formData.append("image", Img);
@@ -89,15 +85,15 @@ const CreateEmployee = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
-        <AdminNavbar />
-        <div className="p-4 flex flex-col gap-8 relative">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden  ">
+        <AdminNavbar />  
+        <div className="p-4 pt-28 flex flex-col gap-8 relative">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
             Add New Employee
           </h1>
 
           <form
-            className="p-10 px-10 bg-white border drop-shadow-md flex flex-col items-center justify-between gap-5 rounded-xl mx-10 
+            className="p-10 px-10 bg-white border drop-shadow-md flex flex-col items-center justify-between gap-5 rounded-xl mx-5 
           dark:bg-[#1a1a1a] dark:border-[#535353]"
             onSubmit={onSubmitHandler}
           >
@@ -366,12 +362,12 @@ const CreateEmployee = () => {
             <div className="flex w-full gap-4">
               <button
                 type="submit"
-                className="px-4 py-2 bg-green-700 text-white rounded-sm text-lg font-normal"
+                className="px-4 py-2 bg-green-600 text-white rounded-sm text-lg font-normal hover:bg-green-700"
               >
                 Submit
               </button>
               <button
-                className="px-4 py-2 bg-red-600 text-white rounded-sm text-lg font-normal"
+                className="px-4 py-2 bg-red-600 text-white rounded-sm text-lg font-normal hover:bg-red-700"
                 onClick={() => navigate("/all-employees")}
               >
                 Go Back
@@ -379,7 +375,8 @@ const CreateEmployee = () => {
             </div>
           </form>
         </div>
-      </div>
+        </div>
+      
     </div>
   );
 };

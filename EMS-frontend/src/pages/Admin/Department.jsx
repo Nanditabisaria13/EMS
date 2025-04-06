@@ -9,7 +9,7 @@ import DepartmentChart from "../../components/Admin/DepartmentChart";
 
 const Department = () => {
   const [addDepartment, setAddDepartment] = useState("");
-
+ 
   const { backendUrl, aToken, fetchDepartments, departments } =
     useContext(AdminContext);
 
@@ -66,7 +66,7 @@ const Department = () => {
       <Sidebar />
       <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar />
-        <div className="px-3 py-3 w-full bg-slate-50 dark:bg-[#101013] dark:text-white">
+        <div className="px-3 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013] dark:text-white">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
             Department
           </h1>
@@ -90,7 +90,7 @@ const Department = () => {
                 <button
                   onClick={onSubmit}
                   type="submit"
-                  className="px-6 py-2 bg-emerald-500 text-neutral-800 text-lg font-medium rounded-lg"
+                  className="px-6 py-2 bg-emerald-400 text-neutral-900 text-lg font-medium rounded-lg hover:bg-emerald-500 hover:text-white"
                 >
                   Add
                 </button>
@@ -117,7 +117,8 @@ const Department = () => {
             <div className="w-full lg:w-[70%] xl:w-[60%]">
               <DepartmentDetail deleteDepartment={deleteDepartment} />
             </div>
-
+            
+          
             <div
               className="p-2 mt-5 w-full lg:w-[30%] xl:w-[40%] flex flex-col items-center justify-center gap-3 bg-white drop-shadow-md
                          border dark:bg-[#1a1a1a] dark:border-[#535353] rounded-xl"

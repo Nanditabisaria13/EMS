@@ -11,6 +11,8 @@ const AdminNavbar = () => {
     getAdminProfile,
     adminProfile,
     aToken,
+    allEmployees,
+    setAllEmployees,
   } = useContext(AdminContext);
   const [openSearch, setOpenSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,14 +32,17 @@ const AdminNavbar = () => {
     setSearchTerm(e.target.value);
     if (e.target.value === "") {
       setSearchResults([]);
+      setAllEmployees(allEmployees)
       return;
     }
 
     handleSearchChange(searchTerm);
+    navigate(`/all-employees?search=${searchTerm}`);
   };
 
   return (
-    <div className="sticky top-0 left-0 z-40">
+    <div className="fixed top-0 sm:left-[8rem] md:left-[19.6rem] w-full  sm:w-[calc(100%-8rem)] md:w-[calc(100%-19.6rem)] z-40">
+
       <div
         className="py-4 md:px-2 lg:px-4 w-full flex items-center justify-between sm:px-10 border-b  bg-white drop-shadow-md
                      dark:bg-[#1a1a1A] dark:border-[#535353] cursor-pointer"
@@ -70,7 +75,7 @@ const AdminNavbar = () => {
 
         <div className="flex items-center justify-between gap-3">
           <DarkModeToggler />
-          <i className="ri-notification-3-fill font-semibold text-xl dark:text-gray-200"></i>
+          <i className="ri-notification-3-fill font-semibold text-xl text-emerald-800 dark:text-emerald-500"></i>
           <div className="flex gap-2 p-2">
             <div className="w-12 h-12 rounded-full border-[3px] border-green-600">
               <img

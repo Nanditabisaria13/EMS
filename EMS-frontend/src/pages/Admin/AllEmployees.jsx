@@ -42,12 +42,12 @@ const AllEmployees = () => {
       <Sidebar />
       <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
         <AdminNavbar setFilterVisible={setFilterVisible} />
-        <div className="p-4 relative flex flex-col gap-8">
+        <div className="p-4 pt-28 relative flex flex-col gap-8">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
             All Employees
           </h1>
 
-          <div className="w-full flex items-start justify-between p-2">
+          <div className="w-full flex items-start justify-between p-2 cursor-pointer">
             <div className="flex items-center gap-2 bg-emerald-700 dark:bg-emerald-500 text-white px-4 py-3 rounded-lg ">
               <h1 className="hidden sm:block text-lg font-normal">Filter:</h1>
               <i
@@ -79,9 +79,16 @@ const AllEmployees = () => {
               </h1>
               <div
                 className="p-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-400"
+                onClick={() => handleFilterSelect("all")}
+              >
+                All{" "}
+              </div>
+
+              <div
+                className="p-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-400"
                 onClick={() => handleFilterSelect("active")}
               >
-                Active Tasks
+                Active Tasks{" "}
               </div>
               <div
                 className="p-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-400"

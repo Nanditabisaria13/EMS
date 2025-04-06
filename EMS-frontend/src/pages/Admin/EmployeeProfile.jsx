@@ -1,24 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/common/Sidebar";
 import AdminNavbar from "../../components/Admin/AdminNavbar";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
 
 const EmployeeProfile = () => {
-  const { employee, setEmployee, getSpecificEmployee, backendUrl, aToken } =
+  const { employee, setEmployee, getSpecificEmployee, backendUrl, aToken,getAllEmployees} =
     useContext(AdminContext);
   const { employeeId } = useParams();
-  const navigate = useNavigate()
+
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [noEmployee, setNoEmployee] = useState(false);
 
   useEffect(() => {
-    getSpecificEmployee(employeeId); // Fetch the employee details when component mounts
+    getSpecificEmployee(employeeId); 
   }, [employeeId]);
+
+
 
   if (!employee) return <p>Loading...</p>;
 
@@ -68,7 +71,8 @@ const EmployeeProfile = () => {
       )
       if(data.success){
         toast.success(data.message)
-         navigate('/all-employees')
+        setNoEmployee(true);
+        getAllEmployees()
       }else{
         toast.error(data.message)
       }
@@ -78,16 +82,29 @@ const EmployeeProfile = () => {
     }
   }
 
-
+ 
   return (
-    <div className="w-full flex">
+    <div className="w-full flex ">
       <Sidebar />
-      <div className="w-full  sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem]  overflow-hidden">
         <AdminNavbar />
 
+          {
+            noEmployee ?(
+            <div className="flex flex-col px-3 py-4 pt-28 items-center justify-center w-full">
+                
+                    <img src={assets.deleteEmployeeImage} alt=""  />
+                     <p className="mt-4 text-xl font-medium text-neutral-700 dark:text-white">
+                       Successfully deleted the employee
+                     </p>
+                 </div>
+                 
+            ):(
+          <>
+        
         <div
-          className="flex flex-col lg:flex-row text-sm items-center justify-center gap-10  w-full bg-white drop-shadow-md 
-        mt-20 dark:bg-[#101013] px-4 py-3"
+          className="flex flex-col pt-28 lg:flex-row text-sm items-center justify-center gap-10  w-full bg-white drop-shadow-md 
+       mt-16 dark:bg-[#101013] px-4 py-3"
         >
           <div className="flex flex-col gap-2 items-center">
             {isEdit ? (
@@ -254,7 +271,7 @@ const EmployeeProfile = () => {
                     onChange={(e) =>
                       setEmployee((prev) => ({
                         ...prev,
-                        lastName: e.target.value,
+                        gender: e.target.value,
                       }))
                     }
                   >
@@ -291,7 +308,7 @@ const EmployeeProfile = () => {
                 {isEdit ? (
                   <input
                     className="max-w-28 bg-gray-100 dark:bg-transparent"
-                    type="number"
+                    type="text"
                     value={employee.salary}
                     onChange={(e) =>
                       setEmployee((prev) => ({
@@ -310,17 +327,20 @@ const EmployeeProfile = () => {
                   Working Type:
                 </p>
                 {isEdit ? (
-                  <input
-                    className="max-w-28 bg-gray-100 dark:bg-transparent"
-                    type="number"
-                    value={employee.workingType}
-                    onChange={(e) =>
-                      setEmployee((prev) => ({
-                        ...prev,
-                        workingType: e.target.value,
-                      }))
-                    }
-                  />
+                   <select
+                   className="max-w-20 bg-gray-100 dark:bg-transparent"
+                   value={employee.workingType}
+                   onChange={(e) =>
+                     setEmployee((prev) => ({
+                       ...prev,
+                       workingType: e.target.value,
+                     }))
+                   }
+                 >
+                   <option value="Onsite">Onsite</option>
+                   <option value="Remote">Remote</option>
+                   <option value="Hybrid">Hybrid</option>
+                 </select>
                 ) : (
                   <p className="text-gray-600 dark:text-gray-200 text-base">
                     {employee.workingType}
@@ -389,7 +409,7 @@ const EmployeeProfile = () => {
             <div className="mt-10 flex gap-2">
               {isEdit ? (
                 <button
-                  className="border border-primary px-10 py-2 rounded-full bg-green-500 hover:bg-emerald-800
+                  className="border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-600
                  hover:text-white transition-all text-base sm:text-xl font-normal"
                   onClick={() => updateEmployeeProfileData(employee._id)}
                 >
@@ -397,7 +417,7 @@ const EmployeeProfile = () => {
                 </button>
               ) : (
                 <button
-                  className="border border-primary px-10 py-2 rounded-lg bg-green-600 hover:bg-green-800
+                  className="border border-primary px-10 py-2 rounded-lg bg-green-500 hover:bg-green-600
                  hover:text-white transition-all text-base sm:text-xl font-normal"
                   onClick={() => setIsEdit(true)}
                 >
@@ -406,7 +426,7 @@ const EmployeeProfile = () => {
               )}
               <button
                 onClick={() => setShowDeleteModal(true)}
-                className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-800
+                className="border border-primary px-10 py-2 rounded-lg bg-red-500 hover:bg-red-700
                hover:text-white transition-all text-base sm:text-lg font-normal"
               >
                 Delete Employee
@@ -436,6 +456,10 @@ const EmployeeProfile = () => {
             </div>
           </div>
         )}
+
+</>)}
+
+
       </div>
     </div>
   );

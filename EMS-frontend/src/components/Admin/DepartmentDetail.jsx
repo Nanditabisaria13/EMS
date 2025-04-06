@@ -3,7 +3,7 @@ import { AdminContext } from "../../context/AdminContext";
 
 const DepartmentDetail = ({ deleteDepartment }) => {
   const { departments } = useContext(AdminContext);
-
+ 
   if (!departments) {
     return <div>Loading..</div>;
   }
@@ -40,13 +40,15 @@ const DepartmentDetail = ({ deleteDepartment }) => {
               </h5>
               <div className="flex gap-2 w-32 lg:w-1/5">
                 <i
-                  onClick={() => deleteDepartment(department.departmentName)}
+                 onClick={() => deleteDepartment(department.departmentName)}
                   className="ri-delete-bin-6-fill text-red-500 text-2xl font-semibold"
                 ></i>
               </div>
+           
             </div>
           ))}
         </div>
+     
       </div>
     </div>
   );

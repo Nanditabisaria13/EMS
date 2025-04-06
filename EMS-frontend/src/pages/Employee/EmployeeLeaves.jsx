@@ -72,7 +72,7 @@ const EmployeeLeaves = () => {
       <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden">
         <EmployeeNavbar />
 
-        <div className="px-4 py-3 w-full bg-slate-50 dark:bg-[#101013]">
+        <div className="px-4 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013]">
           <h1 className="mt-1 font-medium text-2xl text-neutral-800 dark:text-white">
             Leave Stats
           </h1>
@@ -238,7 +238,7 @@ const EmployeeLeaves = () => {
         {/* Duration Options (Days, Weeks, Months) */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
-            Duration
+            Duration Type
           </label>
           <div className="flex gap-4">
             <label className="inline-flex items-center">

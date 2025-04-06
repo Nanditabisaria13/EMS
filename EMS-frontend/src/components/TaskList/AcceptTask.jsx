@@ -68,7 +68,7 @@ const AcceptTask = ({ data }) => {
           { headers: { token } }
         );
         if (data.success) {
-          setProfile(data.updateEmployee);
+          setProfile(data.updatedEmployee);
           toast.success(data.message);
         } else {
           toast.error(data.message);
@@ -183,7 +183,7 @@ const AcceptTask = ({ data }) => {
           <h1>Deadline:</h1>
           {isUpdate ? (
             <input
-              className="bg-gray-50 text-sm max-w-28  dark:bg-transparent dark:text-white"
+              className="text-sm max-w-28 bg-transparent "
               type="text"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}

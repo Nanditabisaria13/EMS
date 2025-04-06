@@ -67,7 +67,7 @@ const Signup = () => {
           onSubmit={onSubmitHandler}
         >
           <h1 className="font-medium text-3xl text-emerald-800 dark:text-emerald-400">
-            Want's to join us, please Sing up
+            Want's to join us, please Sign Up
           </h1>
           <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full">
             <div className="flex flex-col gap-2 w-full">
@@ -143,12 +143,12 @@ const Signup = () => {
           <div className="flex flex-col sm:flex-row items-start justify-between gap-4 w-full">
             <div className="flex flex-col gap-2 w-full">
               <h3 className="text-lg text-zinc-800 font-medium dark:text-zinc-200">
-                Phone
+                Phone 
               </h3>
               <input
                 type="text"
                 value={phone}
-                placeholder="phone"
+                placeholder="Phone"
                 onChange={(e) => setPhone(e.target.value)}
                 className="bg-[#eeeeee] border border-zinc-300 text-lg placeholder:text-base rounded-lg w-full  px-2 py-2
                          dark:bg-transparent"

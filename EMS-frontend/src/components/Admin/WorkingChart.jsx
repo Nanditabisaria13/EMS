@@ -28,7 +28,7 @@ const WorkingChart = () => {
   const COLORS = ["#00C49F", "#FF8042", "#8e44ad"];
   return (
     <div className="w-full flex justify-center items-center text-xs sm:text-base">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={260}>
         <PieChart>
           <Pie
             data={data}

@@ -9,10 +9,11 @@ import welcomeImage from './welcomeImg.png'
 import loginImage from './loginimg2.png'
 import signupImage from './signupImage.webp'
 import uploadImage from './userUploadImage.png'
+import deleteEmployeeImage from './deleteEmployeeImage.png'
 
 
 export const assets = {
     emsImg, welcomeImage,loginImage, signupImage,
     EmsFeatureImg1, EmsFeatureImg2, EmsFeatureImg3,
-    qualityIcon1,qualityIcon2,qualityIcon3, uploadImage
+    qualityIcon1,qualityIcon2,qualityIcon3, uploadImage,deleteEmployeeImage
 }

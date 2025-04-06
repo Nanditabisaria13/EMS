@@ -22,9 +22,9 @@ const Navbar = () => {
         <DarkModeToggler />
         <button
           onClick={() => navigate("/signup")}
-          className="text-white bg-emerald-800 rounded-full font-medium text-xl py-2 px-6 hidden sm:block dark:bg-emerald-600"
+          className="text-white bg-emerald-800 rounded-full font-normal text-lg py-2 px-6 hidden sm:block dark:bg-emerald-600"
         >
-          Sign up
+          Sign Up
         </button>
         <i
           onClick={() => navigate("/signup")}
@@ -32,7 +32,7 @@ const Navbar = () => {
         ></i>
         <button
           onClick={() => navigate("/login")}
-          className="text-white bg-emerald-800 rounded-full font-medium text-xl py-2 px-6 hidden sm:block dark:bg-emerald-600"
+          className="text-white bg-emerald-800 rounded-full font-normal text-lg py-2 px-6 hidden sm:block dark:bg-emerald-600"
         >
           Login
         </button>
