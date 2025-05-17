@@ -266,7 +266,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="mt-10 flex gap-2">
+           <div className="mt-10 flex gap-2">
               {isEdit ? (
                 <button
                   className="border border-primary px-8 py-2 rounded-lg bg-green-500 hover:bg-green-600 hover:text-white transition-all

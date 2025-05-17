@@ -77,7 +77,7 @@ const CreateEmployee = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Something Went Wrong!");
+      toast.error("Something went wrong!");
       console.log(error.message);
     }
   };

@@ -40,11 +40,12 @@ const Sidebar = () => {
     };
 
   return (
+  
     <div
       className={`fixed top-0 left-0 min-h-screen py-6 px-10 sm:px-3 border-r border-zinc-300 bg-white drop-shadow-md  sm:flex flex-col gap-3 
-       dark:bg-[#1a1a1a]  dark:border-[#535353]  cursor-pointer z-50 ${
-         isSidebarOpen ? "block" : "hidden"
-       } transition-all duration-300`}
+       dark:bg-[#1a1a1a]  dark:border-[#535353]  cursor-pointer z-50   transform ${
+      isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+    } sm:translate-x-0 transition-all duration-300`} 
     >
       <div className="logo flex items-start justify-between">
         <h1 className="text-emerald-600 px-3 dark:text-emerald-500 font-semibold text-2xl sm:text-3xl">

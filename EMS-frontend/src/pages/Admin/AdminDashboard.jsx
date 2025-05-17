@@ -127,7 +127,7 @@ const AdminDashboard = () => {
                     <h2 className="text-base md:text-lg font-normal leading-tight text-green-500">
                       Approved Requests
                     </h2>
-                    <p className="font-medium  text-2xl sm:text-3xl text-green-500">
+                    <p className="font-medium text-2xl sm:text-3xl text-green-500">
                       {approvedRequest}
                     </p>
                   </div>

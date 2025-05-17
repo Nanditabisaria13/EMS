@@ -24,7 +24,6 @@ const AdminNavbar = () => {
   useEffect(() => {
     if (aToken && !adminProfile) {
       getAdminProfile();
-      console.log(adminProfile);
     }
   }, [aToken, adminProfile, getAdminProfile]);
 

@@ -236,7 +236,18 @@ module.exports.createEmployee = async(req,res)=>{
   if(!fullName || !email ||!password || !dob || !position || !gender || !phone || !department || !salary || !joiningDate || !address ||!workingType||!adminId ){
             return res.status(400).json({success:false, message:"Missing Details!"})
         }
+     
+         // Check if department exists for this admin
+    const departmentExists = await departmentModel.findOne({
+      departmentName: department,
+      adminId: adminId,
+    });
 
+    if (!departmentExists) {
+      return res.status(404).json({ success: false, message: "Department not found!" });
+    }
+
+      
         // hashing password:
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt)
@@ -309,7 +320,7 @@ module.exports.updateEmployeeProfile = async (req,res)=>{
       address: address,
       phone: phone,
       position: position,
-      department: department,
+      department:department,
       salary: salary,
     }; 
 
