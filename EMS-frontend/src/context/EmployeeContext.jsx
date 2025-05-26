@@ -25,7 +25,11 @@ const EmployeeContextProvider = (props) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
     }
   };
 
@@ -39,9 +43,13 @@ const EmployeeContextProvider = (props) => {
       } else {
         toast.error("Something went wrong!");
       }
-    } catch (err) {
-      toast.error(err.message);
-      console.error("Error fetching employee profile:", err);
+    } catch (error) {
+     if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
+      console.error("Error fetching employee profile:", error);
     }
   };
 
@@ -58,6 +66,11 @@ const EmployeeContextProvider = (props) => {
         toast.error(data.message);
       }
     } catch (error) {
+       if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };

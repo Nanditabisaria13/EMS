@@ -52,7 +52,11 @@ const Profile = () => {
       }
     } catch (error) {
       console.log(error.message);
-      toast.error("Something Went Wrong!");
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
     }
   };
 
@@ -72,7 +76,11 @@ const Profile = () => {
          }
        } catch (error) {
          console.log(error);
-         toast.error("Error While Deleting the account");
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error while deleteing the profile!");
+    }
        }
      }
    

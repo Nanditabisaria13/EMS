@@ -58,7 +58,12 @@ const EmployeeProfile = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error while uodating the profile!");
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error while updating the profile!");
+    }
+    
     }
   };
 
@@ -78,7 +83,12 @@ const EmployeeProfile = () => {
       }
     } catch (error) {
       console.log(error);
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
       toast.error("Error While Deleting the employee!");
+    }
+     
     }
   }
 

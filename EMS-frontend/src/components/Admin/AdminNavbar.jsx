@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DarkModeToggler from "../common/DarkModeToggler";
 import { AdminContext } from "../../context/AdminContext";
 import { assets } from "../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const AdminNavbar = () => {
   const {
@@ -16,6 +17,7 @@ const AdminNavbar = () => {
   } = useContext(AdminContext);
   const [openSearch, setOpenSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
   const handleSearch = () => {
     setOpenSearch((prevState) => !prevState);

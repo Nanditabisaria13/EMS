@@ -48,7 +48,11 @@ const CreateTask = () => {
         toast.error("Request not send");
       }
     } catch (error) {
-      toast.error("Something Went Wrong!");
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };

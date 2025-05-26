@@ -47,9 +47,6 @@ const CreateEmployee = () => {
       formData.append("department", department);
       formData.append("workingType", workingType);
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:${value}`);
-      });
 
       const { data } = await axios.post(
         backendUrl + "/api/admin/create-employee",
@@ -77,7 +74,12 @@ const CreateEmployee = () => {
         toast.error(data.message);
       }
     } catch (error) {
+   
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
       toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };

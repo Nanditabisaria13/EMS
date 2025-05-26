@@ -35,7 +35,11 @@ const AcceptTask = ({ data }) => {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+         if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       }
     }
 
@@ -53,7 +57,11 @@ const AcceptTask = ({ data }) => {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       }
     }
    
@@ -74,7 +82,11 @@ const AcceptTask = ({ data }) => {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       }
     }
 
@@ -92,7 +104,11 @@ const AcceptTask = ({ data }) => {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+       if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+      } else {
+       toast.error("Something went wrong!");
+    }
       }
     }
   };
@@ -123,6 +139,11 @@ const AcceptTask = ({ data }) => {
         toast.error(data.message);
       }
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };
@@ -147,6 +168,11 @@ const AcceptTask = ({ data }) => {
         toast.error(data.message);
       }
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };
@@ -184,7 +210,7 @@ const AcceptTask = ({ data }) => {
           {isUpdate ? (
             <input
               className="text-sm max-w-28 bg-transparent "
-              type="text"
+              type="date"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
             />

@@ -21,7 +21,7 @@ const Signup = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("signup");
+  
     try {
       const { data } = await axios.post(backendUrl + "/api/admin/register", {
         firstName,
@@ -51,7 +51,11 @@ const Signup = () => {
         toast.error("error");
       }
     } catch (error) {
+     if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
       toast.error("Something went wrong!");
+    }
       console.log(error.message);
     }
   };

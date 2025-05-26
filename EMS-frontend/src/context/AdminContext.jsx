@@ -47,7 +47,11 @@ const AdminContextProvider = (props) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
     }
   };
 
@@ -59,12 +63,15 @@ const AdminContextProvider = (props) => {
       );
       if (data.success) {
         setAllEmployees(data.employees);
-        console.log("Updated employees:", data.employees);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
     }
   };
 
@@ -81,7 +88,11 @@ const AdminContextProvider = (props) => {
       }
     } catch (error) {
       console.log(error.message);
-      toast.error("Something Went Wrong!");
+      if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
     }
   };
 
@@ -95,9 +106,13 @@ const AdminContextProvider = (props) => {
       } else {
         toast.error("Something went wrong!");
       }
-    } catch (err) {
-      toast.error(err.message);
-      console.error("Error fetching admin profile:", err);
+    } catch (error) {
+     if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
+      console.error("Error fetching admin profile:", error);
     }
   };
 
@@ -109,13 +124,16 @@ const AdminContextProvider = (props) => {
       );
       if (data.success) {
         setEmployee(data.employee);
-        console.log(data.employee);
       } else {
         toast.error(data.message);
       }
-    } catch (err) {
-      toast.error(err.message);
-      console.error("Error fetching employee profile:", err);
+    } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
+      console.error("Error fetching employee profile:", error);
     }
   };
   
@@ -135,7 +153,11 @@ const AdminContextProvider = (props) => {
       }
     } catch (error) {
       console.error("Error filtering employees:", error);
-      return { success: false, message: "Failed to filter employees" };
+     if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error while filetering the employee!");
+    }
     }
   };
 
@@ -151,7 +173,11 @@ const AdminContextProvider = (props) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error fetching departments");
+       if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error while fetching departments!");
+    }
     }
   };
 
@@ -169,6 +195,11 @@ const AdminContextProvider = (props) => {
         setSearchResults([]);
       }
     } catch (error) {
+       if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Something went wrong!");
+    }
       console.error("Error searching employees:", error);
     }
   };

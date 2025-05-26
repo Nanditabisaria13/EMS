@@ -227,11 +227,12 @@ module.exports.getSpecificEmployee = async(req,res)=>{
 
 // api for add a new employee:
 module.exports.createEmployee = async(req,res)=>{
+  
     try {
       const adminId = req.adminId; 
         const{fullName,email,password,dob,position,gender,phone,salary,department,joiningDate,address,workingType} = req.body
        const imageFile = req.file
-
+    
        
   if(!fullName || !email ||!password || !dob || !position || !gender || !phone || !department || !salary || !joiningDate || !address ||!workingType||!adminId ){
             return res.status(400).json({success:false, message:"Missing Details!"})
@@ -389,6 +390,22 @@ module.exports.addNewTask = async(req,res)=>{
          if(!employee){
             return res.status(400).json({success:false, message:"Employee Not Found!"})
          }
+        
+          //  Check if deadline is in the future
+       const currentDate = new Date();
+       const deadlineDate = new Date(deadline);
+
+      if (isNaN(deadlineDate.getTime())) {
+       return res.status(400).json({ success: false, message: "Invalid deadline date format!" });
+      }
+
+      if (deadlineDate <= currentDate) {
+       return res.status(400).json({
+        success: false,
+        message: "Deadline must be a future date!",
+       });
+    }
+
 
          const newTask = {
             taskId:employee.tasks.length,
@@ -489,6 +506,22 @@ module.exports.taskFailed = async(req,res)=>{
  module.exports.updateTask = async(req,res)=>{
     try {
         const { title, description, category, date, deadline,employeeId, taskId } = req.body;
+
+         //  Check if deadline is in the future
+         const currentDate = new Date();
+       const deadlineDate = new Date(deadline);
+
+       if (isNaN(deadlineDate.getTime())) {
+        return res.status(400).json({ success: false, message: "Invalid deadline date format!" });
+      }
+
+      if (deadlineDate <= currentDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Deadline must be a future date!",
+      });
+     }
+
 
         const updatedEmployee = await employeeModel.findOneAndUpdate(
             { _id: employeeId, "tasks.taskId": parseInt(taskId) },  // Find employee and task by taskId
