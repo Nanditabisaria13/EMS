@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DarkModeToggler from "../common/DarkModeToggler";
 import { AdminContext } from "../../context/AdminContext";
 import { assets } from "../../assets/assets";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminNavbar = () => {
   const {
@@ -15,14 +15,19 @@ const AdminNavbar = () => {
     allEmployees,
     setAllEmployees,
   } = useContext(AdminContext);
+
+  const location = useLocation()
+
   const [openSearch, setOpenSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchBar, setIsSearchBar] = useState(location.pathname === "/all-employees"?true:false)
     const navigate = useNavigate();
 
   const handleSearch = () => {
     setOpenSearch((prevState) => !prevState);
   };
 
+  
   useEffect(() => {
     if (aToken && !adminProfile) {
       getAdminProfile();
@@ -42,7 +47,7 @@ const AdminNavbar = () => {
   };
 
   return (
-    <div className="fixed top-0 sm:left-[8rem] md:left-[19.6rem] w-full  sm:w-[calc(100%-8rem)] md:w-[calc(100%-19.6rem)] z-40">
+    <div className="fixed top-0 sm:left-[8rem] md:left-[17rem] w-full  sm:w-[calc(100%-8rem)] md:w-[calc(100%-17rem)] z-40">
 
       <div
         className="py-4 md:px-2 lg:px-4 w-full flex items-center justify-between sm:px-10 border-b  bg-white drop-shadow-md
@@ -59,7 +64,9 @@ const AdminNavbar = () => {
             </button>
           </div>
 
-          <div className="py-2 px-4 border border-zinc-400 dark:border-[#535353] rounded-xl flex items-start gap-2 relative sm:w-64 lg:w-full">
+       {
+        isSearchBar &&
+      <div className="py-2 px-4 border border-zinc-400 dark:border-[#535353] rounded-xl flex items-start gap-2 relative sm:w-64 lg:w-full">
             <i
               className="ri-search-line font-medium text-xl text-zinc-800 dark:text-zinc-50"
               onClick={handleSearch}
@@ -72,6 +79,8 @@ const AdminNavbar = () => {
               onChange={(e) => handleSearchRequest(e)}
             />
           </div>
+       }
+         
         </div>
 
         <div className="flex items-center justify-between gap-3">

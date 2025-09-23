@@ -16,7 +16,7 @@ const TaskBoard = () => {
   return (
     <div className="w-full flex items-start">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[18rem] overflow-hidden">
         <AdminNavbar />
         <div className="px-3 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013] dark:text-white">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white mt-2">

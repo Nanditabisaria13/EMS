@@ -13,11 +13,12 @@ const AllEmployees = () => {
     getSpecificEmployee,
     filterEmployees,
     filteredEmployees,
-    searchResults,
+    searchResults,  
   } = useContext(AdminContext);
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
-
+   
+     
   const toggleFilter = () => setFilterVisible(!filterVisible);
 
   useEffect(() => {
@@ -37,10 +38,12 @@ const AllEmployees = () => {
     navigate(`/employee-profile/${employeeId}`);
   };
 
+  
+   
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[18rem] overflow-hidden">
         <AdminNavbar setFilterVisible={setFilterVisible} />
         <div className="p-4 pt-28 relative flex flex-col gap-8">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
@@ -48,6 +51,7 @@ const AllEmployees = () => {
           </h1>
 
           <div className="w-full flex items-start justify-between p-2 cursor-pointer">
+
             <div className="flex items-center gap-2 bg-emerald-700 dark:bg-emerald-500 text-white px-4 py-3 rounded-lg ">
               <h1 className="hidden sm:block text-lg font-normal">Filter:</h1>
               <i
@@ -55,6 +59,7 @@ const AllEmployees = () => {
                 className="ri-equalizer-line text-xl font-semibold"
               ></i>
             </div>
+           
             <div
               className="bg-emerald-700 text-white border-2 border-emerald-900 dark:bg-emerald-500 px-4 py-3 flex items-center gap-2
             rounded-lg "
@@ -69,6 +74,7 @@ const AllEmployees = () => {
             </div>
           </div>
 
+  
           {filterVisible && (
             <div
               className="absolute top-36 left-20 bg-white dark:bg-[#1a1a1a] dark:border-[#535353] dark:text-white shadow-md border rounded-lg w-48
@@ -104,6 +110,11 @@ const AllEmployees = () => {
               </div>
             </div>
           )}
+
+        
+         
+
+         
 
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full pt-3 md:px-1 ">
             {allEmployees ? (
@@ -169,6 +180,8 @@ const AllEmployees = () => {
           </div>
         </div>
       </div>
+
+   
     </div>
   );
 };

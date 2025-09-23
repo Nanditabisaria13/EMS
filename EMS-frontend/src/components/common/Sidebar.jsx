@@ -43,7 +43,7 @@ const Sidebar = () => {
   
     <div
       className={`fixed top-0 left-0 min-h-screen py-6 px-10 sm:px-3 border-r border-zinc-300 bg-white drop-shadow-md  sm:flex flex-col gap-3 
-       dark:bg-[#1a1a1a]  dark:border-[#535353]  cursor-pointer z-50   transform ${
+       dark:bg-[#1a1a1a]  dark:border-[#535353]  cursor-pointer z-50 transform ${
       isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
     } sm:translate-x-0 transition-all duration-300`} 
     >
@@ -63,7 +63,7 @@ const Sidebar = () => {
             to="/admin-dashboard"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer mt-3 
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer mt-3 
           ${
             isActive
               ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -80,7 +80,7 @@ const Sidebar = () => {
             to="/all-employees"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                   isEmployeePageActive() ||  isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -97,7 +97,7 @@ const Sidebar = () => {
             to="/task-board"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                   isTaskBoardPageActive() ||  isActive
                      ? "bg-emerald-500  rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -114,7 +114,7 @@ const Sidebar = () => {
             to="/departments"
             className={({
                isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                   isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -131,7 +131,7 @@ const Sidebar = () => {
             to="/leave"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -150,7 +150,7 @@ const Sidebar = () => {
             to="/admin-profile"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? "bg-emerald-500  rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -168,7 +168,7 @@ const Sidebar = () => {
             to="/"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? " rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -189,7 +189,7 @@ const Sidebar = () => {
             to="/employee-dashboard"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer mt-3
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer mt-3
           ${
             isActive
               ? "bg-emerald-500  rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -206,7 +206,7 @@ const Sidebar = () => {
             to="/employee-tasks"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                   isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -223,7 +223,7 @@ const Sidebar = () => {
             to="/employee-leaves"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -240,7 +240,7 @@ const Sidebar = () => {
             to="/employee-profile"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? "bg-emerald-500 rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"
@@ -258,7 +258,7 @@ const Sidebar = () => {
             to="/"
             className={({
               isActive,
-            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-72 cursor-pointer
+            }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-fit md:min-w-60 cursor-pointer
                  ${
                    isActive
                      ? "rounded-tl-sm rounded-bl-sm rounded-tr-full rounded-br-full border-primary text-white"

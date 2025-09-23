@@ -41,7 +41,7 @@ const AdminDashboard = () => {
   return (
     <div className="w-full flex items-start min-h-screen">
       <Sidebar />
-      <div className="w-full sm:ml-[8.5rem] md:ml-[19.6rem] flex flex-col gap-4 overflow-hidden ">
+      <div className="w-full sm:ml-[8.5rem] md:ml-[18rem] flex flex-col gap-4 overflow-hidden ">
         <AdminNavbar />
 
         <div className="px-3 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013] dark:text-white   ">
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
             Dashboard
           </h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6  mt-1 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6  mt-4 ">
             <div
               className="mt-2 bg-white drop-shadow-md p-4 px-4 rounded-xl border border-zinc-300 flex items-center md:flex-row
                       dark:bg-[#1a1a1a] dark:border-[#535353] lg:flex-col xl:flex-row justify-between"

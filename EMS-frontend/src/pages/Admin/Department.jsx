@@ -68,14 +68,14 @@ const Department = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[18rem] overflow-hidden">
         <AdminNavbar />
         <div className="px-3 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013] dark:text-white">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
             Department
           </h1>
 
-          <div className="p-2  grid md:grid-cols-[6fr,3fr] gap-6 sm:grid-cols-1">
+          <div className="p-2 mt-4  grid md:grid-cols-[6fr,3fr] gap-6 sm:grid-cols-1">
             <div
               className="flex flex-col gap-3 bg-white drop-shadow-md p-4 border border-zinc-300 rounded-xl dark:bg-[#1a1a1a]
                         dark:border-[#535353]"

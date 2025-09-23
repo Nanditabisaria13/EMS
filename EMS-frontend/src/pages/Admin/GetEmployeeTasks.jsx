@@ -26,7 +26,7 @@ const GetEmployeeTasks = () => {
   return (
     <div className="w-full flex items-start">
       <Sidebar />
-      <div className="w-full sm:w-[calc(100%-8rem)] md:w-[calc(100%-19.6rem)]  sm:ml-[8rem] md:ml-[19.6rem] cursor-pointer overflow-hidden">
+      <div className="w-full sm:w-[calc(100%-8rem)] md:w-[calc(100%-18rem)]  sm:ml-[8rem] md:ml-[18rem] cursor-pointer overflow-hidden">
         <AdminNavbar />
         <div className="px-4 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013]">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">

@@ -87,7 +87,7 @@ const Profile = () => {
   return (
     <div className="w-full flex ">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full sm:ml-[8rem] md:ml-[18rem] overflow-hidden">
         <AdminNavbar />
 
         <div

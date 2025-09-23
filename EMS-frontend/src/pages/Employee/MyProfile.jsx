@@ -58,7 +58,7 @@ const MyProfile = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full  sm:ml-[8.5rem] md:ml-[17rem] overflow-hidden">
         <EmployeeNavbar />
 
         <div

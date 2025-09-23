@@ -73,7 +73,7 @@ const EmployeeLeaves = () => {
   return (
     <div className="w-full flex items-start">
       <Sidebar />
-      <div className="w-full  sm:ml-[8.5rem] md:ml-[19.6rem] overflow-hidden">
+      <div className="w-full  sm:ml-[8.5rem] md:ml-[17rem] overflow-hidden">
         <EmployeeNavbar />
 
         <div className="px-4 py-3 pt-28 w-full bg-slate-50 dark:bg-[#101013]">

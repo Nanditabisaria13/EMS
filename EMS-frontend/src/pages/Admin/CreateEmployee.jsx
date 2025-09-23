@@ -87,7 +87,7 @@ const CreateEmployee = () => {
   return (
     <div className="w-full flex">
       <Sidebar />
-      <div className="w-full sm:ml-[8rem] md:ml-[19.6rem] overflow-hidden  ">
+      <div className="w-full sm:ml-[8rem] md:ml-[18rem] overflow-hidden  ">
         <AdminNavbar />  
         <div className="p-4 pt-28 flex flex-col gap-8 relative">
           <h1 className="font-medium text-2xl text-neutral-800 dark:text-white">
