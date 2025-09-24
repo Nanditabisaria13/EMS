@@ -1,5 +1,6 @@
 <div align="center">
-# 🚀 E.M.S. -  Employee Management System
+
+#  E.M.S. -  Employee Management System
 
 An Employee Management System built with the MERN stack (MongoDB, Express, React, Node.js).
 This application provides role-based dashboards for Admins and Employees with powerful features like task management, leave requests, real-time updates, and department management.
@@ -102,7 +103,7 @@ npm run dev
 # Access the Application
 
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3000`
+- Backend: `http://localhost:4000`
 
 # Project Structure
 ```bash
@@ -135,13 +136,13 @@ EMS/
   <img src="screenshots/HomePageLightMode.png" alt="Light Mode" width="45%"/>
 </p>  
 
-### 🔐 Authentication  
+###  Authentication Pages
 <p align="center">
   <img src="screenshots/SignUpPage.png" alt="SingUp Page" width="45%"/>
   <img src="screenshots/LoginPage.png" alt="Login Page" width="45%"/>
 </p>  
 
-### 👨‍💼 Admin Dashboard in Light and Dark Mode
+### Admin Dashboard in Light and Dark Mode
 <p align="center">
   <img src="screenshots/AdminDashboardLightMode.png" alt="Admin Dashboard" width="45%"/>
   <img src="screenshots/AdminDashboardDarkMode.png" alt="Admin Dashboard" width="45%"/>
@@ -166,7 +167,7 @@ EMS/
   <img src="screenshots/AdminLeaveStats.png" alt="Leave Stats" width="45%"/>
 </p>  
 
-### 👩‍💻 Employee Dashboard  in Dark and Light Mode
+###  Employee Dashboard  in Dark and Light Mode
 <p align="center">
   <img src="screenshots/EmployeeDashboardDarkMode.png" alt="Employee Dashboard" width="45%"/>
   <img src="screenshots/EmployeeDashboardLightMode.png" alt="Employee Dashboard" width="45%"/>
