@@ -65,7 +65,7 @@ This application provides role-based dashboards for Admins and Employees with po
 
 ## 1. Clone the Repository
 ```bash 
-git clone https://github.com/your-username/employee-management-system.git
+git clone https://github.com/Nanditabisaria13/EMS.git
 cd EMS
 ```
 
@@ -108,7 +108,7 @@ npm run dev
 # Project Structure
 ```bash
 EMS/
-│── EMS-backend/        # Express.js API      
+│── EMS-backend/       # Express.js API      
 │   ├── config/        # Configuration files (DB, Cloudinary, etc.)
 │   ├── models/        # MongoDB models
 │   ├── routes/        # API routes
@@ -119,8 +119,8 @@ EMS/
 │   └── src/
 │       ├── assets/    # Images, icons, and static files
 │       ├── components/ # Reusable UI components
-│       ├── context/   # Global state management (e.g., AuthContext)
-│       └── pages/     # Page components (Admin, Employee, Auth, etc.)
+│       ├── context/   # Global state management (e.g., AdminContext, EmployeeContext)
+│       └── pages/     # Page components (Admin, Employee, Common, etc.)
 │
 │
 │── screenshots/     # Project screenshots (used in README)
@@ -132,58 +132,61 @@ EMS/
 
 ### Home Page in Dark And Light Mode
 <p align="center">
-  <img src="screenshots/HomePageDarkMode.png" alt="Dark Mode" width="45%"/>
-  <img src="screenshots/HomePageLightMode.png" alt="Light Mode" width="45%"/>
+  <img src="Screenshots/HomePageDarkMode.png" alt="Dark Mode" width="45%"/>
+  <img src="Screenshots/HomePageLightMode.png" alt="Light Mode" width="45%"/>
 </p>  
 
 ###  Authentication Pages
+
 <p align="center">
-  <img src="screenshots/SignUpPage.png" alt="SingUp Page" width="45%"/>
-  <img src="screenshots/LoginPage.png" alt="Login Page" width="45%"/>
+  <img src="Screenshots
+/SignUpPage.png" alt="SingUp Page" width="45%"/>
+  <img src="Screenshots
+/LoginPage.png" alt="Login Page" width="45%"/>
 </p>  
 
 ### Admin Dashboard in Light and Dark Mode
 <p align="center">
-  <img src="screenshots/AdminDashboardLightMode.png" alt="Admin Dashboard" width="45%"/>
-  <img src="screenshots/AdminDashboardDarkMode.png" alt="Admin Dashboard" width="45%"/>
+  <img src="Screenshots/AdminDashboardLightMode.png" alt="Admin Dashboard" width="45%"/>
+  <img src="Screenshots/AdminDashboardDarkMode.png" alt="Admin Dashboard" width="45%"/>
 </p>  
 
 ### Admin Employees Section
 <p align="center">
-  <img src="screenshots/EmployeeList.png" alt="Employee List" width="30%"/>
-  <img src="screenshots/AddEmployee.png" alt="Add Employee" width="30%"/>
-  <img src="screenshots/Admin-Employee.png" alt="Employee-profile" width="30%"/>
+  <img src="Screenshots/EmployeeList.png" alt="Employee List" width="30%"/>
+  <img src="Screenshots/AddEmployee.png" alt="Add Employee" width="30%"/>
+  <img src="Screenshots/Admin-Employee.png" alt="Employee-profile" width="30%"/>
 </p>  
 
 ### Admin Task Board Section
 <p align="center">
-  <img src="screenshots/CreateTask.png" alt="Create Task" width="45%"/>
-  <img src="screenshots/AdminTaskBoard.png" alt="Task Board" width="45%"/>
+  <img src="Screenshots/CreateTask.png" alt="Create Task" width="45%"/>
+  <img src="Screenshots/AdminTaskBoard.png" alt="Task Board" width="45%"/>
 </p>  
 
 ### Admin Department and Leave Stats Section
 <p align="center">
-  <img src="screenshots/Department.png" alt="Department Section" width="45%"/>
-  <img src="screenshots/AdminLeaveStats.png" alt="Leave Stats" width="45%"/>
+  <img src="Screenshots/Department.png" alt="Department Section" width="45%"/>
+  <img src="Screenshots/AdminLeaveStats.png" alt="Leave Stats" width="45%"/>
 </p>  
 
 ###  Employee Dashboard  in Dark and Light Mode
 <p align="center">
-  <img src="screenshots/EmployeeDashboardDarkMode.png" alt="Employee Dashboard" width="45%"/>
-  <img src="screenshots/EmployeeDashboardLightMode.png" alt="Employee Dashboard" width="45%"/>
+  <img src="Screenshots/EmployeeDashboardDarkMode.png" alt="Employee Dashboard" width="45%"/>
+  <img src="Screenshots/EmployeeDashboardLightMode.png" alt="Employee Dashboard" width="45%"/>
 </p>  
 
 ### Employee Task Board and Leave Stats Section
 <p align="center">
-  <img src="screenshots/EmployeeTaskBoard.png" alt="Task Board" width="30%"/>
-  <img src="screenshots/EmployeeLeaveStats.png" alt="Leave Stats" width="30%"/>
-  <img src="screenshots/ApplyLeave.png" alt="Apply Leave" width="30%"/>
+  <img src="Screenshots/EmployeeTaskBoard.png" alt="Task Board" width="30%"/>
+  <img src="Screenshots/EmployeeLeaveStats.png" alt="Leave Stats" width="30%"/>
+  <img src="Screenshots/ApplyLeave.png" alt="Apply Leave" width="30%"/>
 </p>  
 
 ### Admin and Employee Profile 
 <p align="center">
-  <img src="screenshots/AdminProfile.png" alt="Admin Profile" width="45%"/>
-  <img src="screenshots/EmployeeProfile.png" alt="Employee Profile" width="45%"/>
+  <img src="Screenshots/AdminProfile.png" alt="Admin Profile" width="45%"/>
+  <img src="Screenshots/EmployeeProfile.png" alt="Employee Profile" width="45%"/>
 </p>  
 
 # 💻 Tech Stack
@@ -194,3 +197,7 @@ EMS/
 - **Authentication**: JWT (JSON Web Tokens), bcrypt
 - **File Uploads**: Multer + Cloudinary
 - **Styling**: TailwindCSS (responsive + modern UI)
+
+# 🤝 Contributing
+
+Pull requests are welcome! Feel free to fork this repo and submit improvements.
