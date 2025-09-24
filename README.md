@@ -139,10 +139,8 @@ EMS/
 ###  Authentication Pages
 
 <p align="center">
-  <img src="Screenshots
-/SignUpPage.png" alt="SingUp Page" width="45%"/>
-  <img src="Screenshots
-/LoginPage.png" alt="Login Page" width="45%"/>
+  <img src="Screenshots/SignUpPage.png" alt="SingUp Page" width="45%"/>
+  <img src="Screenshots/LoginPage.png" alt="Login Page" width="45%"/>
 </p>  
 
 ### Admin Dashboard in Light and Dark Mode
